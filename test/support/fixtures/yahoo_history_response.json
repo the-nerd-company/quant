@@ -1,0 +1,75 @@
+{
+  "chart": {
+    "result": [
+      {
+        "meta": {
+          "currency": "USD",
+          "symbol": "AAPL",
+          "exchangeName": "NMS",
+          "instrumentType": "EQUITY",
+          "firstTradeDate": 345479400,
+          "regularMarketTime": 1704067200,
+          "gmtoffset": -18000,
+          "timezone": "EST",
+          "exchangeTimezoneName": "America/New_York",
+          "regularMarketPrice": 152.0,
+          "chartPreviousClose": 150.0,
+          "previousClose": 150.0,
+          "scale": 3,
+          "priceHint": 2,
+          "currentTradingPeriod": {
+            "pre": {
+              "timezone": "EST",
+              "start": 1704067200,
+              "end": 1704067200,
+              "gmtoffset": -18000
+            },
+            "regular": {
+              "timezone": "EST", 
+              "start": 1704067200,
+              "end": 1704067200,
+              "gmtoffset": -18000
+            },
+            "post": {
+              "timezone": "EST",
+              "start": 1704067200,
+              "end": 1704067200,
+              "gmtoffset": -18000
+            }
+          },
+          "tradingPeriods": [
+            [
+              {
+                "timezone": "EST",
+                "start": 1704067200,
+                "end": 1704067200,
+                "gmtoffset": -18000
+              }
+            ]
+          ],
+          "dataGranularity": "1d",
+          "range": "5d",
+          "validRanges": ["1d", "5d", "1mo", "3mo", "6mo", "1y", "2y", "5y", "10y", "ytd", "max"]
+        },
+        "timestamp": [1704067200, 1704153600],
+        "indicators": {
+          "quote": [
+            {
+              "open": [150.0, 152.0],
+              "high": [155.0, 158.0],
+              "low": [149.0, 151.0],
+              "close": [152.0, 157.0],
+              "volume": [1000000, 1200000]
+            }
+          ],
+          "adjclose": [
+            {
+              "adjclose": [152.0, 157.0]
+            }
+          ]
+        }
+      }
+    ],
+    "error": null
+  }
+}

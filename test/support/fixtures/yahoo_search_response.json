@@ -1,0 +1,51 @@
+{
+  "quotes": [
+    {
+      "exchange": "NMS",
+      "shortname": "Apple Inc.",
+      "quoteType": "EQUITY",
+      "symbol": "AAPL",
+      "index": "quotes",
+      "score": 1000000.0,
+      "typeDisp": "Equity",
+      "longname": "Apple Inc.",
+      "exchDisp": "NASDAQ",
+      "sector": "Technology",
+      "sectorDisp": "Technology",
+      "industry": "Consumer Electronics",
+      "industryDisp": "Consumer Electronics",
+      "isYahooFinance": true
+    },
+    {
+      "exchange": "NMS", 
+      "shortname": "Apple Hospitality REIT Inc.",
+      "quoteType": "EQUITY",
+      "symbol": "APLE",
+      "index": "quotes",
+      "score": 42373.0,
+      "typeDisp": "Equity",
+      "longname": "Apple Hospitality REIT, Inc.",
+      "exchDisp": "NASDAQ",
+      "sector": "Real Estate",
+      "sectorDisp": "Real Estate",
+      "industry": "REIT - Hotel & Motel",
+      "industryDisp": "REIT - Hotel & Motel",
+      "isYahooFinance": true
+    }
+  ],
+  "news": [],
+  "nav": [],
+  "lists": [],
+  "researchReports": [],
+  "screenerFieldResults": [],
+  "totalTime": 45,
+  "timeTakenForQuotes": 391,
+  "timeTakenForNews": 0,
+  "timeTakenForAlgowatchlist": 400,
+  "timeTakenForPredefinedScreener": 400,
+  "timeTakenForCrunchbase": 400,
+  "timeTakenForNav": 400,
+  "timeTakenForResearchReports": 0,
+  "timeTakenForScreenerField": 0,
+  "timeTakenForCulturalAssets": 400
+}

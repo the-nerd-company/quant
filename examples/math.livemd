@@ -1,0 +1,45 @@
+# Quant.Math Examples
+
+```elixir
+Mix.install([
+  {:quant_explorer, github: "the-nerd-company/quant_explorer", branch: "main"},
+  {:kino, "~> 0.12.0"},
+  {:vega_lite, "~> 0.1.8"},
+  {:kino_vega_lite, "~> 0.1.11"},
+  {:nx, "~> 0.10"}
+])
+```
+
+## Section
+
+```elixir
+# Fetch Apple stock data for the last year
+{:ok, aapl_df} = Quant.Explorer.history("AAPL", 
+  provider: :yahoo_finance, 
+  interval: "1d", 
+  period: "1y"
+)
+```
+
+```elixir
+aapl_df = aapl_df 
+|> Quant.Math.add_sma!(:close, period: 3)
+|> Quant.Math.add_ema!(:close, period: 3)
+|> Quant.Math.add_wma!(:close, period: 3)
+|> Quant.Math.add_hma!(:close, period: 3)
+|> Quant.Math.add_dema!(:close, period: 3)
+|> Quant.Math.add_tema!(:close, period: 3)
+|> Quant.Math.add_kama!(:close, period: 3)
+```
+
+```elixir
+Quant.Math.analyze_ma_results!(aapl_df, "close_sma_3")
+```
+
+```elixir
+Quant.Math.add_macd!(aapl_df, :close, fast_period: 5, slow_period: 8, signal_period: 3)
+```
+
+```elixir
+Quant.Math.add_rsi!(aapl_df, :close, period: 14)
+```

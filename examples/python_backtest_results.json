@@ -1,0 +1,58 @@
+{
+  "timestamp": "2025-10-15T00:01:47.867080",
+  "implementation": "Python",
+  "symbols": [
+    "AAPL",
+    "MSFT"
+  ],
+  "strategies": {
+    "MSFT": {
+      "SMA(10,30)": {
+        "final_value": 108091.26881763997,
+        "total_return": 0.08091268817639968,
+        "max_drawdown": -0.220588580414281,
+        "trade_count": 19,
+        "sharpe_ratio": 0.20758340418395596,
+        "win_rate": 0.3333333333333333
+      },
+      "SMA(20,50)": {
+        "final_value": 101685.35461814507,
+        "total_return": 0.016853546181450657,
+        "max_drawdown": -0.1959395774119479,
+        "trade_count": 9,
+        "sharpe_ratio": -0.05071137745105437,
+        "win_rate": 0.25
+      },
+      "EMA(12,26)": {
+        "final_value": 125973.29674181082,
+        "total_return": 0.25973296741810814,
+        "max_drawdown": -0.2526299869292137,
+        "trade_count": 17,
+        "sharpe_ratio": 0.6616235590132976,
+        "win_rate": 0.375
+      },
+      "RSI(14,30,70)": {
+        "final_value": 112615.92739052692,
+        "total_return": 0.1261592739052692,
+        "max_drawdown": -0.20556590405680228,
+        "trade_count": 9,
+        "sharpe_ratio": 0.3274839990418686,
+        "win_rate": 1.0
+      },
+      "MACD(12,26,9)": {
+        "final_value": 98445.0676040626,
+        "total_return": -0.015549323959374015,
+        "max_drawdown": -0.24878966642645461,
+        "trade_count": 40,
+        "sharpe_ratio": -0.09814833987411443,
+        "win_rate": 0.35
+      }
+    }
+  },
+  "buy_hold_benchmarks": {
+    "MSFT": {
+      "final_value": 156718.81264187183,
+      "total_return": 0.5671881264187183
+    }
+  }
+}

@@ -1,0 +1,526 @@
+# Quant.Explorer Financial Charts Example
+
+```elixir
+Mix.install([
+  {:quant_explorer, github: "the-nerd-company/quant_explorer"},
+  {:kino, "~> 0.12.0"},
+  {:vega_lite, "~> 0.1.8"},
+  {:kino_vega_lite, "~> 0.1.11"}
+])
+```
+
+## Overview
+
+This Livebook demonstrates how to use **Quant.Explorer** to fetch financial data from multiple providers and create interactive charts using VegaLite.
+
+**Features demonstrated:**
+
+* 📈 **Stock price charts** with multiple providers
+* 🪙 **Cryptocurrency analysis**
+* 📊 **Multi-asset comparison charts**
+* 🎯 **Standardized schemas** across all providers
+* ⚡ **Real-time quotes** and analysis
+
+<!-- livebook:{"branch_parent_index":0} -->
+
+## Setup API Keys (Optional)
+
+For **Alpha Vantage** and **Twelve Data** providers, you'll need API keys. Yahoo Finance and Binance work without API keys.
+
+```elixir
+# Optional: Set API keys for premium providers
+# Get free keys at:
+# - Alpha Vantage: https://www.alphavantage.co/support/#api-key
+# - Twelve Data: https://twelvedata.com/pricing
+
+alpha_vantage_key = System.get_env("ALPHA_VANTAGE_API_KEY") || "demo"
+twelve_data_key = System.get_env("TWELVE_DATA_API_KEY") || nil
+
+IO.puts("Alpha Vantage key: #{if alpha_vantage_key == "demo", do: "Using demo key", else: "✅ API key set"}")
+IO.puts("Twelve Data key: #{if twelve_data_key, do: "✅ API key set", else: "Not set (will use other providers)"}")
+```
+
+<!-- livebook:{"branch_parent_index":0} -->
+
+## 1. Basic Stock Price Chart - Yahoo Finance
+
+Let's start with a simple stock price chart using **Yahoo Finance** (no API key required):
+
+```elixir
+# Fetch Apple stock data for the last year
+{:ok, aapl_df} = Quant.Explorer.history("AAPL", 
+  provider: :yahoo_finance, 
+  interval: "1d", 
+  period: "1y"
+)
+
+# Display the DataFrame info
+IO.puts("📊 AAPL Data Shape: #{Explorer.DataFrame.n_rows(aapl_df)} rows × #{Explorer.DataFrame.n_columns(aapl_df)} columns")
+IO.puts("🗓️  Date Range: #{Explorer.DataFrame.pull(aapl_df, "timestamp") |> Explorer.Series.min()} to #{Explorer.DataFrame.pull(aapl_df, "timestamp") |> Explorer.Series.max()}")
+
+# Show first few rows
+aapl_df |> Explorer.DataFrame.head(5)
+```
+
+```elixir
+# Create an interactive candlestick chart
+alias VegaLite, as: Vl
+
+# Prepare data for VegaLite (convert DataFrame to list of maps)
+aapl_data = aapl_df
+|> Explorer.DataFrame.select(["timestamp", "open", "high", "low", "close", "volume"])
+|> Explorer.DataFrame.to_rows()
+
+# Create candlestick chart
+aapl_chart = Vl.new(width: 800, height: 400, title: "AAPL Stock Price - Last Year (Yahoo Finance)")
+|> Vl.data_from_values(aapl_data)
+|> Vl.layers([
+  # High-Low lines
+  Vl.new()
+  |> Vl.mark(:rule, color: "gray")
+  |> Vl.encode_field(:x, "timestamp", type: :temporal, title: "Date")
+  |> Vl.encode_field(:y, "low", type: :quantitative, scale: [zero: false])
+  |> Vl.encode_field(:y2, "high"),
+  
+  # Open-Close bars  
+  Vl.new()
+  |> Vl.mark(:bar, width: 3)
+  |> Vl.encode_field(:x, "timestamp", type: :temporal, title: "Date")
+  |> Vl.encode_field(:y, "open", type: :quantitative)
+  |> Vl.encode_field(:y2, "close")
+  |> Vl.encode_field(:color, "datum.close >= datum.open ? 'green' : 'red'", type: :nominal, scale: [range: ["red", "green"]])
+])
+
+Kino.VegaLite.new(aapl_chart)
+```
+
+<!-- livebook:{"branch_parent_index":0} -->
+
+## 2. Multi-Provider Comparison
+
+Now let's compare the **same stock** from **different providers** to show Quant.Explorer's standardization:
+
+```elixir
+# Fetch AAPL from multiple providers (same universal parameters!)
+providers_to_test = [
+  {:yahoo_finance, []},
+  {:alpha_vantage, [api_key: alpha_vantage_key]},
+  {:twelve_data, [api_key: twelve_data_key]}
+]
+
+# Fetch data from all available providers
+comparison_data = providers_to_test
+|> Enum.filter(fn {provider, opts} -> 
+  case provider do
+    :twelve_data -> twelve_data_key != nil
+    _ -> true
+  end
+end)
+|> Enum.map(fn {provider, opts} ->
+  IO.puts("Fetching AAPL from #{provider}...")
+  
+  case Quant.Explorer.history("AAPL", [provider: provider, interval: "1d", period: "30d"] ++ opts) do
+    {:ok, df} -> 
+      IO.puts("✅ #{provider}: #{Explorer.DataFrame.n_rows(df)} rows")
+      {provider, df}
+    {:error, reason} -> 
+      IO.puts("❌ #{provider}: #{inspect(reason)}")
+      nil
+  end
+end)
+|> Enum.filter(&(&1 != nil))
+
+IO.puts("\n📊 Successfully fetched from #{length(comparison_data)} providers")
+comparison_data
+```
+
+```elixir
+# Create comparison chart showing data from multiple providers
+if length(comparison_data) > 1 do
+  # Combine data from all providers
+  combined_data = comparison_data
+  |> Enum.flat_map(fn {provider, df} ->
+    df
+    |> Explorer.DataFrame.select(["timestamp", "close", "provider"])
+    |> Explorer.DataFrame.to_rows()
+  end)
+
+  # Create multi-provider comparison chart
+  comparison_chart = Vl.new(width: 800, height: 400, title: "AAPL: Multi-Provider Comparison (Last 30 days)")
+  |> Vl.data_from_values(combined_data)
+  |> Vl.mark(:line, point: true)
+  |> Vl.encode_field(:x, "timestamp", type: :temporal, title: "Date")
+  |> Vl.encode_field(:y, "close", type: :quantitative, title: "Close Price ($)")
+  |> Vl.encode_field(:color, "provider", type: :nominal, title: "Data Provider")
+  |> Vl.encode_field(:tooltip, ["timestamp", "close", "provider"])
+
+  Kino.VegaLite.new(comparison_chart)
+else
+  IO.puts("Need multiple providers for comparison chart")
+end
+```
+
+<!-- livebook:{"branch_parent_index":0} -->
+
+## 3. Cryptocurrency Analysis - Binance
+
+Let's analyze some cryptocurrency data using **Binance** (no API key required):
+
+```elixir
+# Fetch Bitcoin and Ethereum data
+crypto_symbols = ["BTCUSDT", "ETHUSDT", "ADAUSDT"]
+
+crypto_data = crypto_symbols
+|> Enum.map(fn symbol ->
+  IO.puts("Fetching #{symbol} from Binance...")
+  
+  # Use limit parameter instead of period for Binance (7 days * 24 hours = 168 data points)
+  case Quant.Explorer.history(symbol, provider: :binance, interval: "1h", limit: 168) do
+    {:ok, df} -> 
+      IO.puts("✅ #{symbol}: #{Explorer.DataFrame.n_rows(df)} rows")
+      {symbol, df}
+    {:error, reason} -> 
+      IO.puts("❌ #{symbol}: #{inspect(reason)}")
+      nil
+  end
+end)
+|> Enum.filter(&(&1 != nil))
+
+IO.puts("\n🪙 Successfully fetched #{length(crypto_data)} cryptocurrencies")
+crypto_data
+```
+
+```elixir
+# Create crypto price comparison chart
+if length(crypto_data) > 0 do
+  # Normalize prices for comparison (percentage change from start)
+  normalized_crypto = crypto_data
+  |> Enum.flat_map(fn {symbol, df} ->
+    # Get first price for normalization
+    first_price = df |> Explorer.DataFrame.pull("close") |> Explorer.Series.head(1) |> Explorer.Series.to_list() |> List.first()
+    
+    df
+    |> Explorer.DataFrame.mutate(
+      normalized_price: (close / ^first_price - 1) * 100,
+      symbol: ^symbol
+    )
+    |> Explorer.DataFrame.select(["timestamp", "normalized_price", "symbol", "close"])
+    |> Explorer.DataFrame.to_rows()
+  end)
+
+  # Create normalized comparison chart
+  crypto_chart = Vl.new(width: 800, height: 400, title: "Cryptocurrency Price Comparison - 7 Days (% change)")
+  |> Vl.data_from_values(normalized_crypto)
+  |> Vl.mark(:line, point: false, stroke_width: 2)
+  |> Vl.encode_field(:x, "timestamp", type: :temporal, title: "Date & Time")
+  |> Vl.encode_field(:y, "normalized_price", type: :quantitative, title: "Price Change (%)")
+  |> Vl.encode_field(:color, "symbol", type: :nominal, title: "Cryptocurrency")
+  |> Vl.encode_field(:tooltip, ["timestamp", "normalized_price", "symbol", "close"])
+
+  Kino.VegaLite.new(crypto_chart)
+else
+  IO.puts("No crypto data available for charting")
+end
+```
+
+<!-- livebook:{"branch_parent_index":0} -->
+
+## 4. Real-Time Quotes Dashboard
+
+Create a real-time quotes dashboard showing current prices:
+
+```elixir
+# Fetch real-time quotes from multiple sources
+stock_symbols = ["AAPL", "MSFT", "GOOGL", "TSLA", "AMZN"]
+crypto_symbols = ["BTCUSDT", "ETHUSDT", "BNBUSDT"]
+
+# Get stock quotes
+stock_quotes = case Quant.Explorer.quote(stock_symbols, provider: :yahoo_finance) do
+  {:ok, df} -> 
+    df |> Explorer.DataFrame.mutate(asset_type: "Stock") |> Explorer.DataFrame.to_rows()
+  {:error, reason} -> 
+    IO.puts("Error fetching stock quotes: #{inspect(reason)}")
+    []
+end
+
+# Get crypto quotes
+crypto_quotes = case Quant.Explorer.quote(crypto_symbols, provider: :binance) do
+  {:ok, df} -> 
+    df |> Explorer.DataFrame.mutate(asset_type: "Crypto") |> Explorer.DataFrame.to_rows()
+  {:error, reason} -> 
+    IO.puts("Error fetching crypto quotes: #{inspect(reason)}")
+    []
+end
+
+all_quotes = stock_quotes ++ crypto_quotes
+
+IO.puts("📊 Fetched quotes for #{length(all_quotes)} assets")
+all_quotes
+```
+
+```elixir
+# Create real-time quotes dashboard
+if length(all_quotes) > 0 do
+  # Price chart
+  price_chart = Vl.new(width: 400, height: 300, title: "Current Prices")
+  |> Vl.data_from_values(all_quotes)
+  |> Vl.mark(:bar)
+  |> Vl.encode_field(:x, "symbol", type: :nominal, title: "Symbol")
+  |> Vl.encode_field(:y, "price", type: :quantitative, title: "Price")
+  |> Vl.encode_field(:color, "asset_type", type: :nominal, title: "Asset Type")
+  |> Vl.encode_field(:tooltip, ["symbol", "price", "change_percent"])
+
+  # Change percentage chart
+  change_chart = Vl.new(width: 400, height: 300, title: "24h Change %")
+  |> Vl.data_from_values(all_quotes)
+  |> Vl.mark(:bar)
+  |> Vl.encode_field(:x, "symbol", type: :nominal, title: "Symbol")
+  |> Vl.encode_field(:y, "change_percent", type: :quantitative, title: "Change %")
+  |> Vl.encode_field(:color, "datum.change_percent > 0 ? 'green' : 'red'", type: :nominal, scale: [range: ["red", "green"]])
+  |> Vl.encode_field(:tooltip, ["symbol", "change_percent", "change"])
+
+  # Display both charts
+  Kino.Layout.grid([
+    Kino.VegaLite.new(price_chart),
+    Kino.VegaLite.new(change_chart)
+  ], columns: 2)
+else
+  IO.puts("No quote data available")
+end
+```
+
+<!-- livebook:{"branch_parent_index":0} -->
+
+## 5. Volume Analysis
+
+Analyze trading volume patterns:
+
+```elixir
+# Get AAPL with volume data for the last 3 months
+{:ok, volume_df} = Quant.Explorer.history("AAPL", 
+  provider: :yahoo_finance, 
+  interval: "1d", 
+  period: "3mo"
+)
+
+# Calculate volume moving average
+volume_data = volume_df
+|> Explorer.DataFrame.select(["timestamp", "close", "volume"])
+|> Explorer.DataFrame.sort_by("timestamp")
+|> Explorer.DataFrame.to_rows()
+
+IO.puts("📊 Volume analysis for AAPL - last 3 months")
+IO.puts("Average daily volume: #{volume_df |> Explorer.DataFrame.pull("volume") |> Explorer.Series.mean() |> trunc() |> Number.Delimit.number_to_delimited()}")
+```
+
+```elixir
+# Create price and volume chart
+volume_price_chart = Vl.new(width: 800, height: 500, title: "AAPL: Price vs Volume Analysis")
+|> Vl.data_from_values(volume_data)
+|> Vl.vconcat([
+  # Price chart (top)
+  Vl.new(height: 300)
+  |> Vl.mark(:line, color: "blue", stroke_width: 2)
+  |> Vl.encode_field(:x, "timestamp", type: :temporal, title: "Date")
+  |> Vl.encode_field(:y, "close", type: :quantitative, title: "Price ($)", scale: [zero: false]),
+  
+  # Volume chart (bottom)
+  Vl.new(height: 150)
+  |> Vl.mark(:bar, color: "orange")
+  |> Vl.encode_field(:x, "timestamp", type: :temporal, title: "Date")
+  |> Vl.encode_field(:y, "volume", type: :quantitative, title: "Volume")
+])
+
+Kino.VegaLite.new(volume_price_chart)
+```
+
+<!-- livebook:{"branch_parent_index":0} -->
+
+## 6. Cross-Asset Portfolio Analysis
+
+Demonstrate Quant.Explorer's power by combining stocks and crypto in a portfolio analysis:
+
+```elixir
+# Define a sample portfolio
+portfolio = [
+  {"AAPL", :yahoo_finance, 50},    # 50 shares of Apple
+  {"MSFT", :yahoo_finance, 30},    # 30 shares of Microsoft  
+  {"BTCUSDT", :binance, 0.1},      # 0.1 Bitcoin
+  {"ETHUSDT", :binance, 2.0}       # 2.0 Ethereum
+]
+
+# Fetch data for all assets (last 30 days)
+portfolio_data = portfolio
+|> Enum.map(fn {symbol, provider, shares} ->
+  IO.puts("Fetching #{symbol} from #{provider}...")
+  
+  case Quant.Explorer.history(symbol, provider: provider, interval: "1d", period: "30d") do
+    {:ok, df} ->
+      # Calculate portfolio value for this asset
+      portfolio_df = df
+      |> Explorer.DataFrame.mutate(
+        shares: ^shares,
+        portfolio_value: close * ^shares,
+        asset: ^symbol
+      )
+      |> Explorer.DataFrame.select(["timestamp", "portfolio_value", "asset", "close", "shares"])
+      
+      IO.puts("✅ #{symbol}: #{Explorer.DataFrame.n_rows(df)} rows")
+      portfolio_df
+      
+    {:error, reason} ->
+      IO.puts("❌ #{symbol}: #{inspect(reason)}")
+      nil
+  end
+end)
+|> Enum.filter(&(&1 != nil))
+
+IO.puts("\n💼 Portfolio: #{length(portfolio_data)} assets loaded")
+```
+
+```elixir
+# Create portfolio composition and performance charts
+if length(portfolio_data) > 0 do
+  # Combine all portfolio data
+  combined_portfolio = portfolio_data
+  |> Enum.flat_map(&Explorer.DataFrame.to_rows/1)
+
+  # Portfolio composition (latest values)
+  latest_values = combined_portfolio
+  |> Enum.group_by(& &1["asset"])
+  |> Enum.map(fn {asset, records} -> 
+    latest = Enum.max_by(records, & &1["timestamp"])
+    %{asset: asset, value: latest["portfolio_value"], price: latest["close"], shares: latest["shares"]}
+  end)
+
+  total_value = latest_values |> Enum.map(& &1.value) |> Enum.sum()
+  
+  composition_data = latest_values
+  |> Enum.map(fn asset -> 
+    Map.put(asset, :percentage, asset.value / total_value * 100)
+  end)
+
+  # Portfolio composition pie chart
+  composition_chart = Vl.new(width: 400, height: 400, title: "Portfolio Composition")
+  |> Vl.data_from_values(composition_data)
+  |> Vl.mark(:arc, inner_radius: 50)
+  |> Vl.encode_field(:theta, "value", type: :quantitative)
+  |> Vl.encode_field(:color, "asset", type: :nominal)
+  |> Vl.encode_field(:tooltip, ["asset", "value", "percentage"])
+
+  # Portfolio performance over time
+  performance_chart = Vl.new(width: 400, height: 300, title: "Individual Asset Performance")
+  |> Vl.data_from_values(combined_portfolio)
+  |> Vl.mark(:line, point: false)
+  |> Vl.encode_field(:x, "timestamp", type: :temporal, title: "Date")
+  |> Vl.encode_field(:y, "portfolio_value", type: :quantitative, title: "Value ($)")
+  |> Vl.encode_field(:color, "asset", type: :nominal, title: "Asset")
+  |> Vl.encode_field(:tooltip, ["asset", "portfolio_value", "timestamp"])
+
+  # Display results
+  IO.puts("💼 Portfolio Summary:")
+  IO.puts("Total Value: $#{Float.round(total_value, 2)}")
+  
+  latest_values
+  |> Enum.each(fn asset ->
+    percentage = Float.round(asset.value / total_value * 100, 1)
+    IO.puts("  #{asset.asset}: #{asset.shares} × $#{Float.round(asset.price, 2)} = $#{Float.round(asset.value, 2)} (#{percentage}%)")
+  end)
+
+  # Show charts
+  Kino.Layout.grid([
+    Kino.VegaLite.new(composition_chart),
+    Kino.VegaLite.new(performance_chart)
+  ], columns: 2)
+else
+  IO.puts("No portfolio data available")
+end
+```
+
+<!-- livebook:{"branch_parent_index":0} -->
+
+## 7. Search and Discovery
+
+Explore Quant.Explorer's search capabilities:
+
+```elixir
+# Search for companies across different providers
+search_terms = ["Apple", "Tesla", "Bitcoin"]
+
+search_results = search_terms
+|> Enum.flat_map(fn term ->
+  # Try multiple providers
+  providers = [:yahoo_finance, :binance]
+  
+  providers
+  |> Enum.map(fn provider ->
+    IO.puts("Searching '#{term}' on #{provider}...")
+    
+    case Quant.Explorer.search(term, provider: provider) do
+      {:ok, df} when is_struct(df, Explorer.DataFrame) ->
+        results = df |> Explorer.DataFrame.to_rows()
+        IO.puts("✅ Found #{length(results)} results on #{provider}")
+        results
+      {:error, reason} ->
+        IO.puts("❌ Search failed on #{provider}: #{inspect(reason)}")
+        []
+    end
+  end)
+  |> List.flatten()
+end)
+
+IO.puts("\n🔍 Total search results: #{length(search_results)}")
+
+# Show top results
+search_results
+|> Enum.take(10)
+|> Enum.with_index(1)
+|> Enum.each(fn {result, i} ->
+  IO.puts("#{i}. #{result["name"]} (#{result["symbol"]}) - #{result["provider"]}")
+end)
+
+search_results |> Enum.take(5)
+```
+
+<!-- livebook:{"branch_parent_index":0} -->
+
+## Next Steps
+
+Try these advanced features:
+
+```elixir
+# Advanced examples to try:
+
+# 1. Custom date ranges
+{:ok, custom_df} = Quant.Explorer.history("AAPL", 
+  provider: :yahoo_finance,
+  start_date: ~D[2024-01-01],
+  end_date: ~D[2024-06-30],
+  interval: "1d"
+)
+
+# 2. High-frequency crypto data
+{:ok, hf_crypto} = Quant.Explorer.history("BTCUSDT",
+  provider: :binance,
+  interval: "5m", 
+  period: "1d"
+)
+
+# 3. Options data (Yahoo Finance)
+# {:ok, options} = Quant.Explorer.Providers.YahooFinance.options("AAPL")
+
+# 4. All available crypto pairs
+# {:ok, all_pairs} = Quant.Explorer.Providers.Binance.get_all_symbols()
+
+# 5. Streaming large datasets
+# stream = Quant.Explorer.Providers.YahooFinance.history_stream("AAPL", period: "max")
+# max_data = stream |> Enum.to_list() |> List.first()
+
+IO.puts("🚀 Ready to explore more financial data with Quant.Explorer!")
+```
+
+---
+
+**📚 Documentation:** [GitHub Repository](https://github.com/the-nerd-company/quant_explorer)
+
+**🔧 Issues & Features:** [GitHub Issues](https://github.com/the-nerd-company/quant_explorer/issues)

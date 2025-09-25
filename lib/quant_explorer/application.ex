@@ -1,0 +1,24 @@
+defmodule Quant.Explorer.Application do
+  # See https://hexdocs.pm/elixir/Application.html
+  # for more information on OTP Applications
+  @moduledoc false
+
+  use Application
+
+  @impl true
+  def start(_type, _args) do
+    children = [
+      # Start the advanced rate limiter with ETS backend by default
+      {Quant.Explorer.RateLimiter,
+       [
+         backend: Quant.Explorer.RateLimiting.EtsBackend,
+         backend_opts: []
+       ]}
+    ]
+
+    # See https://hexdocs.pm/elixir/Supervisor.html
+    # for other strategies and supported options
+    opts = [strategy: :one_for_one, name: Quant.Explorer.Supervisor]
+    Supervisor.start_link(children, opts)
+  end
+end
