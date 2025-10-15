@@ -149,7 +149,7 @@ combined_df = DataFrame.concat_rows([binance_btc, yahoo_aapl, alpha_msft])
 # Add to mix.exs
 def deps do
   [
-    {:quant_explorer, github: "the-nerd-company/quant_explorer"}
+    {:quant_explorer, github: "the-nerd-company/quant"}
   ]
 end
 ```
