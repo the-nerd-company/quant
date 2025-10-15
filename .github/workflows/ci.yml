@@ -39,13 +39,7 @@ jobs:
         enable-cache: true
 
     - name: Install Python dependencies
-      run: |
-        # Install from pyproject.toml if available, fallback to requirements.txt
-        if [ -f "pyproject.toml" ]; then
-          uv pip install --system -e .
-        else
-          uv pip install --system -r requirements.txt
-        fi
+      run: uv sync
 
     - name: Set up Elixir
       uses: erlef/setup-beam@v1
