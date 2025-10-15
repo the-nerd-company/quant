@@ -15,6 +15,7 @@ Fetch financial data from multiple providers with **universal parameters** and *
 ## ✨ **Key Features**
 
 ### 🎯 **Universal API Design**
+
 - **Standardized Interface**: Same parameters work across ALL providers
 - **Identical Schemas**: Every DataFrame has exactly 12 columns regardless of provider
 - **Cross-Asset Ready**: Stocks, crypto, forex all use unified structure
@@ -32,6 +33,7 @@ Fetch financial data from multiple providers with **universal parameters** and *
 | **WMA** | Weighted Moving Average | 100% (0.0% diff) | Linear weight distribution |
 
 ### 🎯 **Trading Strategies & Backtesting**
+
 - **Strategy Framework**: Modular strategy composition with indicators
 - **Backtesting Engine**: Portfolio performance analysis with metrics
 - **Signal Generation**: Buy/sell signals from multiple indicators
@@ -59,6 +61,7 @@ Fetch financial data from multiple providers with **universal parameters** and *
 | **Twelve Data** | Stocks, Forex, Crypto | ✅ Required | 💰 Premium | High-frequency data, global markets |
 
 ### ⚡ **Performance & Reliability**
+
 - **Explorer/Polars Backend**: Optimized for high-throughput analysis
 - **NX Mathematical Computing**: High-performance numerical operations
 - **Zero External HTTP Deps**: Uses built-in Erlang `:httpc`
@@ -67,6 +70,7 @@ Fetch financial data from multiple providers with **universal parameters** and *
 - **Comprehensive Test Coverage**: Full validation suite with cross-language verification
 
 ### 🛡️ **Production Ready**
+
 - **Type Safety**: Full Dialyzer specifications
 - **Error Handling**: Comprehensive error types and graceful degradation
 - **Flexible Configuration**: Environment variables, runtime config, inline API keys
@@ -107,6 +111,7 @@ DataFrame.concat_rows(yahoo_df, binance_df)
 **Problem Solved:** Financial data providers return inconsistent schemas, making cross-provider analysis painful.
 
 **Before Quant.Explorer:**
+
 ```elixir
 # Binance: 16 inconsistent columns  
 [\"symbol\", \"open_time\", \"close_time\", \"quote_volume\", \"taker_buy_volume\", ...]
@@ -118,6 +123,7 @@ DataFrame.concat_rows(yahoo_df, binance_df)
 ```
 
 **After Quant.Explorer:**
+
 ```elixir
 # ALL providers: Identical 12-column schema  
 [\"symbol\", \"timestamp\", \"open\", \"high\", \"low\", \"close\", \"volume\", 
@@ -128,6 +134,7 @@ combined_df = DataFrame.concat_rows([binance_btc, yahoo_aapl, alpha_msft])
 ```
 
 **📊 Standardization Stats:**
+
 - ✅ **5 Providers Standardized**: Yahoo Finance, Binance, Alpha Vantage, CoinGecko, Twelve Data  
 - ✅ **100% Schema Consistency**: Every DataFrame has identical structure  
 - ✅ **50+ Parameter Translations**: Universal parameters work with all providers  
@@ -285,21 +292,24 @@ currencies = ["usd", "eur", "btc", "eth"]
 {:ok, df} = Quant.Explorer.history("AAPL", provider: :yahoo_finance, interval: "1d", period: "1y")
 ```
 
+```elixir
 # Multiple symbols at once
 {:ok, df} = Quant.Explorer.fetch(["AAPL", "MSFT", "GOOGL"], provider: :yahoo_finance, period: "1mo")
+```
 
+```elixir
 # Real-time quotes
+
 {:ok, df} = Quant.Explorer.quote(["AAPL", "MSFT"], provider: :yahoo_finance)
 {:ok, df} = Quant.Explorer.quote(["BTCUSDT", "ETHUSDT"], provider: :binance)
 {:ok, df} = Quant.Explorer.quote(["bitcoin", "ethereum"], provider: :coin_gecko)
 {:ok, df} = Quant.Explorer.quote("AAPL", provider: :alpha_vantage)
 {:ok, df} = Quant.Explorer.quote("AAPL", provider: :twelve_data)
+```
 
-# Company info
-{:ok, info} = Quant.Explorer.info("AAPL", provider: :yahoo_finance)
-{:ok, info} = Quant.Explorer.info("bitcoin", provider: :coin_gecko)
+```elixir
+# Symbol search
 
-# Search symbols
 {:ok, df} = Quant.Explorer.search("Apple", provider: :yahoo_finance)
 {:ok, df} = Quant.Explorer.search("BTC", provider: :binance)
 {:ok, df} = Quant.Explorer.search("bitcoin", provider: :coin_gecko)
@@ -342,6 +352,7 @@ currencies = ["usd", "eur", "btc", "eth"]
 **Every provider returns these exact schemas - no exceptions:**
 
 ### Historical Data (**12 columns exactly**)
+
 ```elixir
 ["symbol", "timestamp", "open", "high", "low", "close", "volume", 
  "adj_close", "market_cap", "provider", "currency", "timezone"]
@@ -358,12 +369,14 @@ currencies = ["usd", "eur", "btc", "eth"]
 ```
 
 ### Quote Data (**12 columns exactly**)
+
 ```elixir
 ["symbol", "price", "change", "change_percent", "volume", "high_24h", 
  "low_24h", "market_cap", "timestamp", "provider", "currency", "market_state"]
 ```
 
 ### Search Results (**11 columns exactly**)
+
 ```elixir
 ["symbol", "name", "type", "exchange", "currency", "country", 
  "sector", "industry", "market_cap", "provider", "match_score"]
@@ -372,6 +385,7 @@ currencies = ["usd", "eur", "btc", "eth"]
 ## **How Standardization Works** 🔧
 
 ### **Parameter Translation Engine**
+
 ```elixir
 # Your input: Universal parameters
 Quant.Explorer.history("AAPL", provider: :alpha_vantage, interval: "1h")
@@ -384,6 +398,7 @@ Quant.Explorer.history("AAPL", provider: :alpha_vantage, interval: "1h")
 ```
 
 ### **Schema Standardization Pipeline**
+
 ```elixir
 # 1. Raw provider data (varies by provider)
 Binance: ["symbol", "open_time", "close_time", "quote_volume", ...] # 16 columns
@@ -401,6 +416,7 @@ Yahoo:   ["Date", "Open", "High", "Adj Close", ...]                # 7 columns
 ```
 
 ### **Cross-Asset Consistency**
+
 ```elixir
 # Stocks: market_cap from company data, adj_close properly calculated
 # Crypto: market_cap = nil (honest about availability), adj_close = close
@@ -495,6 +511,7 @@ config :quant_explorer,
 ```
 
 **⚠️ Alpha Vantage Free Tier Limitations:**
+
 - 5 requests per minute, 500 requests per day
 - Some symbols may not be available in free tier
 - Premium endpoints require paid subscription
@@ -581,6 +598,7 @@ Explorer.DataFrame.describe(aapl)
 ```
 
 **Benefits of inline API keys:**
+
 - ✅ No global configuration needed
 - ✅ Perfect for Livebook notebooks  
 - ✅ Support multiple clients/keys
@@ -592,26 +610,31 @@ Explorer.DataFrame.describe(aapl)
 ### Common API Issues
 
 **Alpha Vantage `{:error, :symbol_not_found}`:**
+
 - Free tier has limited symbol coverage
 - Try popular symbols: "AAPL", "MSFT", "GOOGL", "TSLA"
 - Verify your API key is valid (not "demo" key)
 - Check rate limits (5 requests/minute for free tier)
 
 **Alpha Vantage `{:error, {:api_key_error, "Demo API key detected..."}}`:**
+
 - You're using the default "demo" API key
-- Get a free API key at https://www.alphavantage.co/support/#api-key
+- Get a free API key at <https://www.alphavantage.co/support/#api-key>
 - Set `ALPHA_VANTAGE_API_KEY` environment variable
 - Or configure in your application config
 
 **Twelve Data `RuntimeError: API key is required`:**
+
 - Set `TWELVE_DATA_API_KEY` environment variable
 - Or configure in `config/config.exs` with your API key
 
 **CoinGecko slow responses:**
+
 - Free tier has 10-30 calls/minute limit
 - Consider upgrading to Pro tier for higher limits
 
 **Rate limiting errors:**
+
 - Each provider has different rate limits
 - Free tiers are more restrictive than paid plans
 - Wait between requests or implement backoff logic
@@ -670,6 +693,7 @@ mix test --only integration          # Only real API tests
 ```
 
 **Default behavior:**
+
 - ✅ **Mocked tests run by default** - Fast, reliable, no external dependencies
 - ❌ **Integration tests excluded by default** - Require API keys and internet
 
@@ -677,23 +701,22 @@ See [TESTING.md](TESTING.md) for detailed testing documentation.
 
 ## License
 
-**Creative Commons Attribution-NonCommercial 4.0 International License**
-
 This project is licensed under CC BY-NC 4.0, which means:
 
 ✅ **You can:**
+
 - Use for personal projects, research, and education
 - Share, copy, and redistribute the code
 - Modify and build upon the code
 - Use in academic and non-profit contexts
 
 ❌ **You cannot:**
+
 - Use for commercial purposes without permission
 - Sell products or services based on this code
 - Use in commercial trading systems or financial products
 
 📧 **Commercial licensing available separately**  
-For commercial use, enterprise licensing, or white-label solutions, please contact: guillaume@the-nerd-company.com
+For commercial use, enterprise licensing, or white-label solutions, please contact: <guillaume@the-nerd-company.com>
 
 This ensures the library remains free for the community while protecting against unauthorized commercial exploitation.
-
