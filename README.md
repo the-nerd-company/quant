@@ -716,7 +716,4 @@ This project is licensed under CC BY-NC 4.0, which means:
 - Sell products or services based on this code
 - Use in commercial trading systems or financial products
 
-📧 **Commercial licensing available separately**  
-For commercial use, enterprise licensing, or white-label solutions, please contact: <guillaume@the-nerd-company.com>
-
 This ensures the library remains free for the community while protecting against unauthorized commercial exploitation.
