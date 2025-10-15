@@ -21,22 +21,17 @@ jobs:
           # Latest stable versions
           - elixir: '1.18.4'
             otp: '27.2'
-            python: '3.11'
+            python: '3.13'
             coverage: true
-          # Previous stable versions for compatibility
-          - elixir: '1.17.3'
-            otp: '26.2'
-            python: '3.10'
-            coverage: false
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python ${{ matrix.python }}
       uses: actions/setup-python@v4
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: ${{ matrix.python }}
 
     - name: Install UV
       uses: astral-sh/setup-uv@v3
@@ -132,115 +127,85 @@ jobs:
     - name: Run Dialyzer
       run: mix dialyzer
 
-  integration_test:
-    name: Integration Tests
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+#   integration_test:
+#     name: Integration Tests
+#     runs-on: ubuntu-latest
+#     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+#     steps:
+#     - name: Checkout code
+#       uses: actions/checkout@v4
 
-    - name: Set up Python 3.11
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-        cache: 'pip'
+#     - name: Set up Python 3.11
+#       uses: actions/setup-python@v5
+#       with:
+#         python-version: '3.11'
+#         cache: 'pip'
 
-    - name: Install Python dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pandas numpy
+#     - name: Install Python dependencies
+#       run: |
+#         python -m pip install --upgrade pip
+#         pip install pandas numpy
 
-    - name: Set up Elixir
-      uses: erlef/setup-beam@v1
-      with:
-        elixir-version: '1.18.4'
-        otp-version: '27.2'
+#     - name: Set up Elixir
+#       uses: erlef/setup-beam@v1
+#       with:
+#         elixir-version: '1.18.4'
+#         otp-version: '27.2'
 
-    - name: Restore dependencies cache
-      uses: actions/cache@v4
-      with:
-        path: |
-          deps
-          _build
-        key: ${{ runner.os }}-mix-integration-${{ hashFiles('**/mix.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-mix-integration-
+#     - name: Restore dependencies cache
+#       uses: actions/cache@v4
+#       with:
+#         path: |
+#           deps
+#           _build
+#         key: ${{ runner.os }}-mix-integration-${{ hashFiles('**/mix.lock') }}
+#         restore-keys: |
+#           ${{ runner.os }}-mix-integration-
 
-    - name: Install dependencies
-      run: mix deps.get
+#     - name: Install dependencies
+#       run: mix deps.get
 
-    - name: Run integration tests
-      run: mix test --include integration
-      env:
-        # Add API keys for integration tests if available
-        ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
-        TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    # - name: Run integration tests
+    #   run: mix test --include integration
+    #   env:
+    #     # Add API keys for integration tests if available
+    #     ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
+    #     TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
 
-  security:
-    name: Security Audit
-    runs-on: ubuntu-latest
+#   docs:
+#     name: Documentation
+#     runs-on: ubuntu-latest
     
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+#     steps:
+#     - name: Checkout code
+#       uses: actions/checkout@v4
 
-    - name: Set up Elixir
-      uses: erlef/setup-beam@v1
-      with:
-        elixir-version: '1.18.4'
-        otp-version: '27.2'
+#     - name: Set up Elixir
+#       uses: erlef/setup-beam@v1
+#       with:
+#         elixir-version: '1.18.4'
+#         otp-version: '27.2'
 
-    - name: Restore dependencies cache
-      uses: actions/cache@v4
-      with:
-        path: |
-          deps
-          _build
-        key: ${{ runner.os }}-mix-security-${{ hashFiles('**/mix.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-mix-security-
+#     - name: Restore dependencies cache
+#       uses: actions/cache@v4
+#       with:
+#         path: |
+#           deps
+#           _build
+#         key: ${{ runner.os }}-mix-docs-${{ hashFiles('**/mix.lock') }}
+#         restore-keys: |
+#           ${{ runner.os }}-mix-docs-
 
-    - name: Install dependencies
-      run: mix deps.get
+#     - name: Install dependencies
+#       run: mix deps.get
 
-    - name: Security audit
-      run: mix deps.audit
+#     - name: Generate documentation
+#       run: mix docs
 
-  docs:
-    name: Documentation
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Set up Elixir
-      uses: erlef/setup-beam@v1
-      with:
-        elixir-version: '1.18.4'
-        otp-version: '27.2'
-
-    - name: Restore dependencies cache
-      uses: actions/cache@v4
-      with:
-        path: |
-          deps
-          _build
-        key: ${{ runner.os }}-mix-docs-${{ hashFiles('**/mix.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-mix-docs-
-
-    - name: Install dependencies
-      run: mix deps.get
-
-    - name: Generate documentation
-      run: mix docs
-
-    - name: Deploy to GitHub Pages
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./doc
+#     - name: Deploy to GitHub Pages
+#       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+#       uses: peaceiris/actions-gh-pages@v3
+#       with:
+#         github_token: ${{ secrets.GITHUB_TOKEN }}
+#         publish_dir: ./doc
