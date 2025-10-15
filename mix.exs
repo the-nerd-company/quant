@@ -65,7 +65,7 @@ defmodule Quant.Explorer.MixProject do
       {:telemetry, "~> 1.0"},
       {:certifi, "~> 2.15"},
       {:ex_doc, "~> 0.31", only: :dev, runtime: false},
-      {:git_hooks, "0.8.0", only: :dev, runtime: false},
+      {:git_hooks, "0.8.1", only: :dev, runtime: false},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
       {:bypass, "~> 2.1", only: :test},
