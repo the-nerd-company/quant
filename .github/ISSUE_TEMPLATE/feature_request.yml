@@ -1,0 +1,84 @@
+name: Feature Request
+description: Suggest an idea or enhancement for Quant.Explorer
+title: "[FEATURE] "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a feature! Please describe your idea below.
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Feature Category
+      description: What category does this feature request fall into?
+      options:
+        - Data Provider (new provider support)
+        - Mathematical Indicators
+        - Trading Strategies
+        - Performance/Optimization
+        - Developer Experience
+        - Documentation
+        - Testing
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Description
+      description: Is your feature request related to a problem? Please describe.
+      placeholder: A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the solution you'd like
+      placeholder: A clear and concise description of what you want to happen.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Describe any alternative solutions or features you've considered
+      placeholder: A clear and concise description of any alternative solutions or features you've considered.
+
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Use Case
+      description: Describe your specific use case for this feature
+      placeholder: How would you use this feature? What problem does it solve for you?
+    validations:
+      required: true
+
+  - type: textarea
+    id: example
+    attributes:
+      label: Code Example (Optional)
+      description: If applicable, provide a code example of how you'd like to use this feature
+      render: elixir
+      placeholder: |
+        # Example of how the feature might work
+        {:ok, result} = Quant.Explorer.new_feature(args)
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      description: Would you be interested in contributing to this feature?
+      options:
+        - label: I would be willing to contribute to this feature
+        - label: I would need guidance on how to implement this
+        - label: I would prefer someone else to implement this
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any other context, screenshots, or examples about the feature request here.

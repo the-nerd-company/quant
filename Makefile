@@ -15,12 +15,29 @@ livebook:
 
 .PHONY: test coverage livebook
 
+# Python dependency management with UV (recommended)
+python-setup:
+	./scripts/setup_python.sh
+
+python-install-uv:
+	uv pip install --system -e .
+
+python-install-requirements:
+	uv pip install --system -r requirements.txt
+
+python-list:
+	uv pip list
+
+python-freeze:
+	uv pip freeze > requirements.txt
+
+python-test:
+	mix test --include python_validation
+
+# Legacy Python venv commands (for compatibility)
 python-venv:
 	python3 -m venv .venv
 	source .venv/bin/activate; pip install -r requirements.txt
-
-python-freeze:
-	pip freeze -l > requirements.txt 
 
 python-install:
 	source .venv/bin/activate; pip install -r requirements.txt

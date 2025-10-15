@@ -126,6 +126,67 @@ combined_df = DataFrame.concat_rows([binance_btc, yahoo_aapl, alpha_msft])
 - ✅ **Cross-Asset Ready**: Stocks, crypto, forex all compatible  
 - ✅ **Production Tested**: Real APIs, live data, 1000+ data points validated
 
+## Installation & Setup
+
+### Elixir Library
+
+```elixir
+# Add to mix.exs
+def deps do
+  [
+    {:quant_explorer, github: "the-nerd-company/quant_explorer"}
+  ]
+end
+```
+
+### Python Dependencies (For Cross-Language Validation)
+
+The library includes comprehensive Python validation tests that compare results against pandas/numpy standards for mathematical accuracy.
+
+#### Quick Setup with UV (Recommended)
+
+```bash
+# Run the automated setup script
+./scripts/setup_python.sh
+
+# Or use Makefile
+make python-setup
+```
+
+#### Manual UV Installation
+
+```bash
+# Install UV (much faster than pip)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Install dependencies
+uv pip install --system -e .
+# or
+uv pip install --system -r requirements.txt
+```
+
+#### Traditional pip (Legacy)
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+### Running Tests
+
+```bash
+# All tests
+mix test
+
+# Python validation tests only (requires Python setup)
+mix test --include python_validation
+make python-test
+
+# Coverage report
+mix coveralls.lcov
+```
+
 ## Quick Start
 
 **⚠️ Important: Provider Must Be Explicit**

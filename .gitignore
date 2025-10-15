@@ -20,3 +20,7 @@ quant_explorer-*.tar
 /tmp/
 /priv/plts/
 .venv/
+
+# UV Python package manager cache
+.uv/
+uv.lock
