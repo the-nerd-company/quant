@@ -1,5 +1,11 @@
 # Quant
 
+[![Coverage Status](https://coveralls.io/repos/github/the-nerd-company/quant/badge.svg?branch=main)](https://coveralls.io/github/the-nerd-company/quant?branch=main)
+[![CI](https://github.com/the-nerd-company/quant/workflows/CI/badge.svg)](https://github.com/the-nerd-company/quant/actions)
+[![Elixir](https://img.shields.io/badge/elixir-1.17%2B-purple.svg)](https://elixir-lang.org)
+[![OTP](https://img.shields.io/badge/OTP-26%2B-blue.svg)](https://erlang.org)
+[![License](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
+
 > **High-performance standardized financial data API for Elixir with Explorer DataFrames**
 
 Fetch financial data from multiple providers with **universal parameters** and **identical output schemas** for seamless analysis and maximum performance.

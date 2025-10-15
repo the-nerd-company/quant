@@ -26,8 +26,7 @@ defmodule Quant.Strategy.Composite do
 
   alias Explorer.DataFrame
   alias Explorer.Series
-  alias Quant.Strategy.Signal
-  alias Quant.Strategy.{Momentum, MovingAverage, Volatility}
+  alias Quant.Strategy.{Momentum, MovingAverage, Signal, Volatility}
 
   @type combination_logic :: :all | :any | :majority | :weighted
   @type strategy_weight :: {map(), float()}
