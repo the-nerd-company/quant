@@ -23,4 +23,3 @@ quant_explorer-*.tar
 
 # UV Python package manager cache
 .uv/
-uv.lock
