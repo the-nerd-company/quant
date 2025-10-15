@@ -6,6 +6,8 @@
 [![OTP](https://img.shields.io/badge/OTP-26%2B-blue.svg)](https://erlang.org)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 
+[![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https%3A%2F%2Fraw.githubusercontent.com%2Fthe-nerd-company%2Fquant%2Frefs%2Fheads%2Fmain%2Fexamples%2Fbacktest_examples.livemd)
+
 > **High-performance standardized financial data API for Elixir with Explorer DataFrames**
 
 Fetch financial data from multiple providers with **universal parameters** and **identical output schemas** for seamless analysis and maximum performance.
