@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.4">
+    <meta name="project" content="quant v0.1.0-alpha.1">
+
+
+    <title>Quant.Explorer.Providers.Binance — quant v0.1.0-alpha.1</title>
+
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
+
+    <script defer src="dist/sidebar_items-6FC3D5C7.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="api-reference.html" class="sidebar-projectName" translate="no">
+quant
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0-alpha.1
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-module" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of quant</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">Quant.Explorer.Providers.Binance</span> 
+      <small class="app-vsn" translate="no">(quant v0.1.0-alpha.1)</small>
+
+    </h1>
+
+  </div>
+
+
+    <section id="moduledoc">
+<p>Binance provider implementation for cryptocurrency data.</p><p>This module provides access to Binance public API data including:</p><ul><li>Historical OHLCV data (klines/candlesticks)</li><li>Real-time ticker statistics (24hr ticker)</li><li>Symbol search and exchange information</li></ul><p>All data is returned as Explorer DataFrames for immediate analysis.</p><h2 id="module-binance-api-endpoints" class="section-heading"><a href="#module-binance-api-endpoints" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Binance API Endpoints</span></h2><ul><li>Historical: <code class="inline">https://api.binance.com/api/v3/klines</code></li><li>24hr Ticker: <code class="inline">https://api.binance.com/api/v3/ticker/24hr</code></li><li>Exchange Info: <code class="inline">https://api.binance.com/api/v3/exchangeInfo</code></li></ul><h2 id="module-rate-limiting" class="section-heading"><a href="#module-rate-limiting" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Rate Limiting</span></h2><p>Binance uses weighted rate limiting (1200 weight per minute):</p><ul><li>Klines: 2-20 weight (based on limit parameter)</li><li>24hr Ticker: 2 weight (single symbol), 80 weight (all symbols)</li><li>Exchange Info: 20 weight</li></ul><h2 id="module-interval-mapping" class="section-heading"><a href="#module-interval-mapping" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Interval Mapping</span></h2><p>Binance intervals: 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 8h, 12h, 1d, 3d, 1w, 1M</p><h2 id="module-examples" class="section-heading"><a href="#module-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="c1"># Historical data (klines)</span><span class="w">
+</span><span class="p" data-group-id="6428910122-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="p" data-group-id="6428910122-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Binance</span><span class="o">.</span><span class="n">history</span><span class="p" data-group-id="6428910122-2">(</span><span class="s">&quot;BTCUSDT&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">interval</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1h&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">limit</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p" data-group-id="6428910122-2">)</span><span class="w">
+
+</span><span class="c1"># Multiple symbols quotes</span><span class="w">
+</span><span class="p" data-group-id="6428910122-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="p" data-group-id="6428910122-3">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Binance</span><span class="o">.</span><span class="k">quote</span><span class="p" data-group-id="6428910122-4">(</span><span class="p" data-group-id="6428910122-5">[</span><span class="s">&quot;BTCUSDT&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ETHUSDT&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ADAUSDT&quot;</span><span class="p" data-group-id="6428910122-5">]</span><span class="p" data-group-id="6428910122-4">)</span><span class="w">
+
+</span><span class="c1"># Search for trading pairs</span><span class="w">
+</span><span class="p" data-group-id="6428910122-6">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="p" data-group-id="6428910122-6">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Binance</span><span class="o">.</span><span class="n">search</span><span class="p" data-group-id="6428910122-7">(</span><span class="s">&quot;BTC&quot;</span><span class="p" data-group-id="6428910122-7">)</span><span class="w">
+
+</span><span class="c1"># All available symbols</span><span class="w">
+</span><span class="p" data-group-id="6428910122-8">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="p" data-group-id="6428910122-8">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Binance</span><span class="o">.</span><span class="n">search</span><span class="p" data-group-id="6428910122-9">(</span><span class="s">&quot;&quot;</span><span class="p" data-group-id="6428910122-9">)</span></code></pre>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_all_symbols/0" data-no-tooltip="" translate="no">get_all_symbols()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Get all available trading pairs on Binance.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#history_range/4" data-no-tooltip="" translate="no">history_range(symbol, interval, start_time, end_time)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Get klines/candlestick data with time range.
+Automatically calculates limit based on time range and interval.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+
+    <div class="functions-list">
+<section class="detail" id="get_all_symbols/0">
+
+  <div class="detail-header">
+    <a href="#get_all_symbols/0" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_all_symbols()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+<p>Get all available trading pairs on Binance.</p>
+  </section>
+</section>
+<section class="detail" id="history_range/4">
+
+  <div class="detail-header">
+    <a href="#history_range/4" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">history_range(symbol, interval, start_time, end_time)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+<p>Get klines/candlestick data with time range.
+Automatically calculates limit based on time range and interval.</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/quant/0.1.0-alpha.1" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/quant/0.1.0-alpha.1">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="quant.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
+
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

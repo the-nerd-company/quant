@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.4">
+    <meta name="project" content="quant v0.1.0-alpha.1">
+
+
+    <title>API Reference — quant v0.1.0-alpha.1</title>
+
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
+
+    <script defer src="dist/sidebar_items-6FC3D5C7.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="api-reference.html" class="sidebar-projectName" translate="no">
+quant
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0-alpha.1
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-extra" id="main" data-type="extras">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of quant</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>API Reference <small class="app-vsn">quant v#0.1.0-alpha.1</small></h1>
+
+  </div>
+
+    <section class="details-list">
+      <h2 id="modules" class="section-heading">Modules</h2>
+      <div class="summary">
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Explorer.html" translate="no">Quant.Explorer</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Quant.Explorer - High-performance standardized financial data API for Elixir.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Explorer.Config.html" translate="no">Quant.Explorer.Config</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Centralized configuration management for Quant.Explorer.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Explorer.DataTransformer.html" translate="no">Quant.Explorer.DataTransformer</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Data normalization utilities for converting raw API responses into standardized Explorer DataFrames.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Explorer.HttpClient.html" translate="no">Quant.Explorer.HttpClient</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>HTTP client wrapper with retry logic, timeout handling, and standardized error responses.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Explorer.HttpClientConfig.html" translate="no">Quant.Explorer.HttpClientConfig</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Configuration module for selecting the appropriate HTTP client based on environment.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Explorer.Providers.AlphaVantage.html" translate="no">Quant.Explorer.Providers.AlphaVantage</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Alpha Vantage data provider for Quant.Explorer.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Explorer.Providers.Behaviour.html" translate="no">Quant.Explorer.Providers.Behaviour</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Behaviour that all data providers must implement.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Explorer.Providers.Binance.html" translate="no">Quant.Explorer.Providers.Binance</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Binance provider implementation for cryptocurrency data.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Explorer.Providers.CoinGecko.html" translate="no">Quant.Explorer.Providers.CoinGecko</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>CoinGecko cryptocurrency data provider.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Explorer.Providers.TwelveData.html" translate="no">Quant.Explorer.Providers.TwelveData</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Twelve Data financial API provider.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Explorer.Providers.YahooFinance.html" translate="no">Quant.Explorer.Providers.YahooFinance</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Yahoo Finance provider implementation.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Explorer.RateLimiter.html" translate="no">Quant.Explorer.RateLimiter</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Advanced rate limiter with pluggable backends and provider-specific configurations.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Explorer.RateLimiting.Behaviour.html" translate="no">Quant.Explorer.RateLimiting.Behaviour</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Behaviour for rate limiting backends.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Explorer.RateLimiting.EtsBackend.html" translate="no">Quant.Explorer.RateLimiting.EtsBackend</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>ETS-based rate limiting backend implementation.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Explorer.RateLimiting.ProviderConfig.html" translate="no">Quant.Explorer.RateLimiting.ProviderConfig</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Provider-specific rate limiting configurations.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Explorer.SchemaStandardizer.html" translate="no">Quant.Explorer.SchemaStandardizer</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Comprehensive schema standardization for financial data analysis.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Math.html" translate="no">Quant.Math</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Mathematical utilities for financial data analysis.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Math.MovingAverages.html" translate="no">Quant.Math.MovingAverages</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Moving Average technical indicators.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Math.Oscillators.html" translate="no">Quant.Math.Oscillators</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Momentum oscillators and technical indicators for financial time series analysis.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Math.Utils.html" translate="no">Quant.Math.Utils</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Shared utility functions for mathematical operations in the Quant.Math module.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Strategy.html" translate="no">Quant.Strategy</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Main API module for quantitative trading strategies.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Strategy.Backtest.html" translate="no">Quant.Strategy.Backtest</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Basic backtesting engine for strategy validation.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Strategy.Composite.html" translate="no">Quant.Strategy.Composite</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Composite strategy implementation for combining multiple strategies.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Strategy.Momentum.html" translate="no">Quant.Strategy.Momentum</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Momentum-based trading strategies.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Strategy.MovingAverage.html" translate="no">Quant.Strategy.MovingAverage</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Moving average based trading strategies.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Strategy.Optimization.html" translate="no">Quant.Strategy.Optimization</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Parameter optimization engine for systematic strategy tuning.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Strategy.Optimization.Export.html" translate="no">Quant.Strategy.Optimization.Export</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Export utilities for optimization results.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Strategy.Optimization.Ranges.html" translate="no">Quant.Strategy.Optimization.Ranges</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Utilities for generating parameter ranges and combinations.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Strategy.Optimization.Results.html" translate="no">Quant.Strategy.Optimization.Results</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Analysis and ranking of optimization results.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Strategy.Performance.html" translate="no">Quant.Strategy.Performance</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Performance analysis for backtesting results.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Strategy.Signal.html" translate="no">Quant.Strategy.Signal</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Core signal generation module for trading strategies.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Strategy.Utils.html" translate="no">Quant.Strategy.Utils</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Utility functions for strategy operations.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Quant.Strategy.Volatility.html" translate="no">Quant.Strategy.Volatility</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Volatility-based trading strategies.</p></div>
+
+</div>
+
+      </div>
+    </section>
+
+
+</div>
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/quant/0.1.0-alpha.1" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/quant/0.1.0-alpha.1">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="quant.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
+
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

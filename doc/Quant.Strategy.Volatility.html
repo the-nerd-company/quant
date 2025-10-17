@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.4">
+    <meta name="project" content="quant v0.1.0-alpha.1">
+
+
+    <title>Quant.Strategy.Volatility — quant v0.1.0-alpha.1</title>
+
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
+
+    <script defer src="dist/sidebar_items-6FC3D5C7.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="api-reference.html" class="sidebar-projectName" translate="no">
+quant
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0-alpha.1
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-module" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of quant</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">Quant.Strategy.Volatility</span> 
+      <small class="app-vsn" translate="no">(quant v0.1.0-alpha.1)</small>
+
+    </h1>
+
+  </div>
+
+
+    <section id="moduledoc">
+<p>Volatility-based trading strategies.</p><p>This module implements strategies based on volatility indicators
+such as Bollinger Bands, ATR-based systems, and volatility breakouts.</p><h2 id="module-supported-strategies-future-implementation" class="section-heading"><a href="#module-supported-strategies-future-implementation" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Supported Strategies (Future Implementation)</span></h2><ul><li><strong>Bollinger Bands</strong>: Mean reversion using standard deviation bands</li><li><strong>ATR Breakout</strong>: Average True Range based breakout system</li><li><strong>Volatility Squeeze</strong>: Low volatility followed by breakout</li></ul><h2 id="module-note" class="section-heading"><a href="#module-note" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Note</span></h2><p>This module is a placeholder for future volatility strategy implementations.
+It will be completed when volatility indicators are added to Quant.Math.</p>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#apply_indicators/3" data-no-tooltip="" translate="no">apply_indicators(dataframe, strategy, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Apply volatility indicators (placeholder).</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#bollinger_bands/1" data-no-tooltip="" translate="no">bollinger_bands(opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Create a Bollinger Bands strategy (placeholder).</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_indicator_columns/1" data-no-tooltip="" translate="no">get_indicator_columns(strategy)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Get indicator columns for volatility strategies (placeholder).</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#validate_dataframe/2" data-no-tooltip="" translate="no">validate_dataframe(dataframe, strategy)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Validate DataFrame for volatility strategies (placeholder).</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+
+    <div class="functions-list">
+<section class="detail" id="apply_indicators/3">
+
+    <span id="apply_indicators/2"></span>
+
+  <div class="detail-header">
+    <a href="#apply_indicators/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">apply_indicators(dataframe, strategy, opts \\ [])</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> apply_indicators(<a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) ::
+  {:ok, <a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Apply volatility indicators (placeholder).</p><h2 id="apply_indicators/3-parameters" class="section-heading"><a href="#apply_indicators/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">dataframe</code> - Input DataFrame</li><li><code class="inline">strategy</code> - Strategy configuration</li><li><code class="inline">opts</code> - Additional options</li></ul><h2 id="apply_indicators/3-returns" class="section-heading"><a href="#apply_indicators/3-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><p>Currently returns the DataFrame unchanged as volatility indicators
+are not yet implemented in Quant.Math.</p>
+  </section>
+</section>
+<section class="detail" id="bollinger_bands/1">
+
+    <span id="bollinger_bands/0"></span>
+
+  <div class="detail-header">
+    <a href="#bollinger_bands/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">bollinger_bands(opts \\ [])</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> bollinger_bands(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+<p>Create a Bollinger Bands strategy (placeholder).</p><p>This will be implemented when Bollinger Bands are added to Quant.Math.</p><h2 id="bollinger_bands/1-parameters" class="section-heading"><a href="#bollinger_bands/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">:period</code> - Moving average period (default: 20)</li><li><code class="inline">:std_mult</code> - Standard deviation multiplier (default: 2.0)</li><li><code class="inline">:column</code> - Price column to use (default: :close)</li></ul>
+  </section>
+</section>
+<section class="detail" id="get_indicator_columns/1">
+
+  <div class="detail-header">
+    <a href="#get_indicator_columns/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_indicator_columns(strategy)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_indicator_columns(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()]</pre>
+
+      </div>
+
+<p>Get indicator columns for volatility strategies (placeholder).</p>
+  </section>
+</section>
+<section class="detail" id="validate_dataframe/2">
+
+  <div class="detail-header">
+    <a href="#validate_dataframe/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">validate_dataframe(dataframe, strategy)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> validate_dataframe(<a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Validate DataFrame for volatility strategies (placeholder).</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/quant/0.1.0-alpha.1" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/quant/0.1.0-alpha.1">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="quant.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
+
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.4">
+    <meta name="project" content="quant v0.1.0-alpha.1">
+
+
+    <title>Quant.Math.MovingAverages — quant v0.1.0-alpha.1</title>
+
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
+
+    <script defer src="dist/sidebar_items-6FC3D5C7.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="api-reference.html" class="sidebar-projectName" translate="no">
+quant
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0-alpha.1
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-module" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of quant</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">Quant.Math.MovingAverages</span> 
+      <small class="app-vsn" translate="no">(quant v0.1.0-alpha.1)</small>
+
+    </h1>
+
+  </div>
+
+
+    <section id="moduledoc">
+<p>Moving Average technical indicators.</p><p>This module implements various moving average calculations including:</p><ul><li>Simple Moving Average (SMA)</li><li>Exponential Moving Average (EMA) - Coming soon</li><li>Weighted Moving Average (WMA) - Coming soon</li><li>Hull Moving Average (HMA) - Coming soon</li></ul><p>All functions work with Explorer DataFrames and use NX tensors internally
+for high-performance calculations.</p>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-types summary">
+  <h2>
+    <a href="#types">Types</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:ema_opts/0" data-no-tooltip="" translate="no">ema_opts()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:name_option/0" data-no-tooltip="" translate="no">name_option()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:nan_policy/0" data-no-tooltip="" translate="no">nan_policy()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:period_option/0" data-no-tooltip="" translate="no">period_option()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:sma_opts/0" data-no-tooltip="" translate="no">sma_opts()</a>
+
+      </div>
+
+    </div>
+
+</div>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#add_dema!/3" data-no-tooltip="" translate="no">add_dema!(df, price_column \\ :close, options \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Add Double Exponential Moving Average (DEMA) to a DataFrame.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#add_ema!/3" data-no-tooltip="" translate="no">add_ema!(dataframe, column, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Add Exponential Moving Average (EMA) to a DataFrame.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#add_hma!/3" data-no-tooltip="" translate="no">add_hma!(df, price_column \\ :close, options \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Add Hull Moving Average (HMA) to a DataFrame.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#add_kama!/3" data-no-tooltip="" translate="no">add_kama!(df, price_column \\ :close, options \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Add Kaufman Adaptive Moving Average (KAMA) to a DataFrame.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#add_sma!/3" data-no-tooltip="" translate="no">add_sma!(dataframe, column, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Add Simple Moving Average (SMA) to a DataFrame.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#add_tema!/3" data-no-tooltip="" translate="no">add_tema!(df, price_column \\ :close, options \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Add Triple Exponential Moving Average (TEMA) to a DataFrame.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#add_wma!/3" data-no-tooltip="" translate="no">add_wma!(df, price_column \\ :close, options \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Add Weighted Moving Average (WMA) column to a DataFrame.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#analyze_ma_results!/2" data-no-tooltip="" translate="no">analyze_ma_results!(dataframe, column)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Get information about SMA/EMA results in a DataFrame.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Types</span>
+    </h1>
+
+    <div class="types-list">
+<section class="detail" id="t:ema_opts/0">
+
+  <div class="detail-header">
+    <a href="#t:ema_opts/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">ema_opts()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> ema_opts() :: [
+  period: <a href="#t:period_option/0">period_option</a>(),
+  alpha: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">float</a>(),
+  name: <a href="#t:name_option/0">name_option</a>(),
+  nan_policy: <a href="#t:nan_policy/0">nan_policy</a>(),
+  min_periods: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>(),
+  fillna: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()
+]</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:name_option/0">
+
+  <div class="detail-header">
+    <a href="#t:name_option/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">name_option()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> name_option() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:nan_policy/0">
+
+  <div class="detail-header">
+    <a href="#t:nan_policy/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">nan_policy()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> nan_policy() :: :drop | :fill_forward | :error</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:period_option/0">
+
+  <div class="detail-header">
+    <a href="#t:period_option/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">period_option()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> period_option() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:sma_opts/0">
+
+  <div class="detail-header">
+    <a href="#t:sma_opts/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">sma_opts()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> sma_opts() :: [
+  period: <a href="#t:period_option/0">period_option</a>(),
+  name: <a href="#t:name_option/0">name_option</a>(),
+  nan_policy: <a href="#t:nan_policy/0">nan_policy</a>(),
+  min_periods: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>(),
+  fillna: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()
+]</pre>
+
+      </div>
+
+
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+
+    <div class="functions-list">
+<section class="detail" id="add_dema!/3">
+
+    <span id="add_dema!/1"></span>
+
+    <span id="add_dema!/2"></span>
+
+  <div class="detail-header">
+    <a href="#add_dema!/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">add_dema!(df, price_column \\ :close, options \\ [])</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> add_dema!(<a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>()</pre>
+
+      </div>
+
+<p>Add Double Exponential Moving Average (DEMA) to a DataFrame.</p><p>The Double Exponential Moving Average was developed by Patrick Mulloy to reduce the lag
+inherent in traditional exponential moving averages by applying double smoothing.</p><h2 id="add_dema!/3-algorithm" class="section-heading"><a href="#add_dema!/3-algorithm" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Algorithm</span></h2><ol><li>Calculate EMA(period) of the price data (EMA1)</li><li>Calculate EMA(period) of EMA1 (EMA2)</li><li>DEMA = 2 × EMA1 - EMA2</li></ol><h2 id="add_dema!/3-parameters" class="section-heading"><a href="#add_dema!/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">df</code> - Explorer DataFrame containing price data</li><li><code class="inline">price_column</code> - Name of the column containing prices (default: :close)</li><li><code class="inline">options</code> - Keyword list with the following options:<ul><li><code class="inline">:period</code> - DEMA period (required, positive integer)</li><li><code class="inline">:column_name</code> - Name for the DEMA column (default: &quot;dema_N&quot; where N is period)</li><li><code class="inline">:alpha</code> - Optional smoothing factor. If not provided, uses 2/(period+1)</li><li><code class="inline">:validate</code> - Whether to validate inputs (default: true)</li></ul></li></ul><h2 id="add_dema!/3-returns" class="section-heading"><a href="#add_dema!/3-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><ul><li><code class="inline">DataFrame.t()</code> - DataFrame with DEMA column added</li></ul><h2 id="add_dema!/3-raises" class="section-heading"><a href="#add_dema!/3-raises" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Raises</span></h2><ul><li><a href="https://hexdocs.pm/elixir/ArgumentError.html"><code class="inline">ArgumentError</code></a> - If inputs are invalid or insufficient data</li></ul><h2 id="add_dema!/3-examples" class="section-heading"><a href="#add_dema!/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Explorer.DataFrame</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="9492442794-1">(</span><span class="p" data-group-id="9492442794-2">%{</span><span class="ss">close</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9492442794-3">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="9492442794-3">]</span><span class="p" data-group-id="9492442794-2">}</span><span class="p" data-group-id="9492442794-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Quant.Math.MovingAverages</span><span class="o">.</span><span class="n">add_dema!</span><span class="p" data-group-id="9492442794-4">(</span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="ss">:close</span><span class="p">,</span><span class="w"> </span><span class="ss">period</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p" data-group-id="9492442794-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="s">&quot;close_dema_4&quot;</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nc">Map</span><span class="o">.</span><span class="n">keys</span><span class="p" data-group-id="9492442794-5">(</span><span class="n">result</span><span class="o">.</span><span class="n">dtypes</span><span class="p" data-group-id="9492442794-5">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+
+</span><span class="c1"># DEMA reduces lag compared to traditional EMA</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Explorer.DataFrame</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="9492442794-6">(</span><span class="p" data-group-id="9492442794-7">%{</span><span class="ss">close</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9492442794-8">[</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p" data-group-id="9492442794-8">]</span><span class="p" data-group-id="9492442794-7">}</span><span class="p" data-group-id="9492442794-6">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Quant.Math.MovingAverages</span><span class="o">.</span><span class="n">add_dema!</span><span class="p" data-group-id="9492442794-9">(</span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="ss">:close</span><span class="p">,</span><span class="w"> </span><span class="ss">period</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p" data-group-id="9492442794-9">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">dema_values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Explorer.DataFrame</span><span class="o">.</span><span class="n">to_columns</span><span class="p" data-group-id="9492442794-10">(</span><span class="n">result</span><span class="p" data-group-id="9492442794-10">)</span><span class="p" data-group-id="9492442794-11">[</span><span class="s">&quot;close_dema_4&quot;</span><span class="p" data-group-id="9492442794-11">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_list</span><span class="p" data-group-id="9492442794-12">(</span><span class="n">dema_values</span><span class="p" data-group-id="9492442794-12">)</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">length</span><span class="p" data-group-id="9492442794-13">(</span><span class="n">dema_values</span><span class="p" data-group-id="9492442794-13">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">10</span><span class="w">
+</span><span class="no">true</span></code></pre><h2 id="add_dema!/3-mathematical-properties" class="section-heading"><a href="#add_dema!/3-mathematical-properties" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Mathematical Properties</span></h2><ul><li><strong>Reduced Lag</strong>: Responds faster to price changes than traditional EMA</li><li><strong>Double Smoothing</strong>: Uses two EMA calculations for improved trend following</li><li><strong>Trend Sensitivity</strong>: More sensitive to recent price changes than single EMA</li><li><strong>Overshooting</strong>: May overshoot in trending markets due to reduced lag</li></ul>
+  </section>
+</section>
+<section class="detail" id="add_ema!/3">
+
+    <span id="add_ema!/2"></span>
+
+  <div class="detail-header">
+    <a href="#add_ema!/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">add_ema!(dataframe, column, opts \\ [])</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> add_ema!(<a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), <a href="#t:ema_opts/0">ema_opts</a>()) :: <a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>()</pre>
+
+      </div>
+
+<p>Add Exponential Moving Average (EMA) to a DataFrame.</p><p>The Exponential Moving Average gives more weight to recent prices and responds
+more quickly to price changes than a simple moving average. The first EMA value
+is calculated as the SMA of the first <code class="inline">period</code> values.</p><h2 id="add_ema!/3-parameters" class="section-heading"><a href="#add_ema!/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">dataframe</code> - The Explorer DataFrame</li><li><code class="inline">column</code> - The column to calculate EMA for (atom)</li><li><code class="inline">opts</code> - Options (keyword list)</li></ul><h2 id="add_ema!/3-options" class="section-heading"><a href="#add_ema!/3-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><code class="inline">:period</code> - Number of periods for the exponential moving average (default: 12)</li><li><code class="inline">:alpha</code> - Smoothing factor (default: 2/(period+1))</li><li><code class="inline">:name</code> - Name for the new column (default: &quot;&lt;column&gt;<em>ema</em>&lt;period&gt;&quot;)</li><li><code class="inline">:nan_policy</code> - How to handle NaN values (default: :drop)</li><li><code class="inline">:min_periods</code> - Minimum periods required (default: same as period)</li><li><code class="inline">:fillna</code> - Value to fill NaN results with (default: nil)</li></ul><h2 id="add_ema!/3-examples" class="section-heading"><a href="#add_ema!/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Explorer.DataFrame</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="1941243737-1">(</span><span class="p" data-group-id="1941243737-2">%{</span><span class="ss">close</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1941243737-3">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">,</span><span class="w"> </span><span class="mf">4.0</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p" data-group-id="1941243737-3">]</span><span class="p" data-group-id="1941243737-2">}</span><span class="p" data-group-id="1941243737-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Quant.Math.MovingAverages</span><span class="o">.</span><span class="n">add_ema!</span><span class="p" data-group-id="1941243737-4">(</span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="ss">:close</span><span class="p">,</span><span class="w"> </span><span class="ss">period</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="1941243737-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="s">&quot;close_ema_3&quot;</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nc">Map</span><span class="o">.</span><span class="n">keys</span><span class="p" data-group-id="1941243737-5">(</span><span class="n">result</span><span class="o">.</span><span class="n">dtypes</span><span class="p" data-group-id="1941243737-5">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+
+</span><span class="gp unselectable">iex&gt; </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Explorer.DataFrame</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="1941243737-6">(</span><span class="p" data-group-id="1941243737-7">%{</span><span class="ss">close</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1941243737-8">[</span><span class="mf">10.0</span><span class="p">,</span><span class="w"> </span><span class="mf">12.0</span><span class="p">,</span><span class="w"> </span><span class="mf">14.0</span><span class="p">,</span><span class="w"> </span><span class="mf">16.0</span><span class="p">,</span><span class="w"> </span><span class="mf">18.0</span><span class="p" data-group-id="1941243737-8">]</span><span class="p" data-group-id="1941243737-7">}</span><span class="p" data-group-id="1941243737-6">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Quant.Math.MovingAverages</span><span class="o">.</span><span class="n">add_ema!</span><span class="p" data-group-id="1941243737-9">(</span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="ss">:close</span><span class="p">,</span><span class="w"> </span><span class="ss">period</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ema_2&quot;</span><span class="p" data-group-id="1941243737-9">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="s">&quot;ema_2&quot;</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nc">Map</span><span class="o">.</span><span class="n">keys</span><span class="p" data-group-id="1941243737-10">(</span><span class="n">result</span><span class="o">.</span><span class="n">dtypes</span><span class="p" data-group-id="1941243737-10">)</span><span class="w">
+</span><span class="no">true</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="add_hma!/3">
+
+    <span id="add_hma!/1"></span>
+
+    <span id="add_hma!/2"></span>
+
+  <div class="detail-header">
+    <a href="#add_hma!/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">add_hma!(df, price_column \\ :close, options \\ [])</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> add_hma!(<a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>()</pre>
+
+      </div>
+
+<p>Add Hull Moving Average (HMA) to a DataFrame.</p><p>The Hull Moving Average was developed by Alan Hull to address the lag inherent in traditional moving averages.
+It uses weighted moving averages and a square root period to significantly reduce lag while maintaining smoothness.</p><h2 id="add_hma!/3-algorithm" class="section-heading"><a href="#add_hma!/3-algorithm" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Algorithm</span></h2><ol><li>Calculate WMA(period/2) of the price data</li><li>Calculate WMA(period) of the price data</li><li>Calculate raw HMA: 2 × WMA(period/2) - WMA(period)</li><li>Apply WMA(√period) to the raw HMA for final smoothing</li></ol><h2 id="add_hma!/3-parameters" class="section-heading"><a href="#add_hma!/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">df</code> - Explorer DataFrame containing price data</li><li><code class="inline">price_column</code> - Name of the column containing prices (default: :close)</li><li><code class="inline">options</code> - Keyword list with the following options:<ul><li><code class="inline">:period</code> - HMA period (required, positive integer)</li><li><code class="inline">:column_name</code> - Name for the HMA column (default: :hma_N where N is period)</li><li><code class="inline">:validate</code> - Whether to validate inputs (default: true)</li></ul></li></ul><h2 id="add_hma!/3-returns" class="section-heading"><a href="#add_hma!/3-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><ul><li><code class="inline">DataFrame.t()</code> - DataFrame with HMA column added</li></ul><h2 id="add_hma!/3-raises" class="section-heading"><a href="#add_hma!/3-raises" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Raises</span></h2><ul><li><a href="https://hexdocs.pm/elixir/ArgumentError.html"><code class="inline">ArgumentError</code></a> - If inputs are invalid or insufficient data</li></ul><h2 id="add_hma!/3-examples" class="section-heading"><a href="#add_hma!/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Explorer.DataFrame</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="6392558142-1">(</span><span class="p" data-group-id="6392558142-2">%{</span><span class="ss">close</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6392558142-3">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="6392558142-3">]</span><span class="p" data-group-id="6392558142-2">}</span><span class="p" data-group-id="6392558142-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Quant.Math.MovingAverages</span><span class="o">.</span><span class="n">add_hma!</span><span class="p" data-group-id="6392558142-4">(</span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="ss">:close</span><span class="p">,</span><span class="w"> </span><span class="ss">period</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p" data-group-id="6392558142-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="s">&quot;close_hma_4&quot;</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nc">Map</span><span class="o">.</span><span class="n">keys</span><span class="p" data-group-id="6392558142-5">(</span><span class="n">result</span><span class="o">.</span><span class="n">dtypes</span><span class="p" data-group-id="6392558142-5">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+
+</span><span class="c1"># Hull MA reduces lag compared to traditional moving averages</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Explorer.DataFrame</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="6392558142-6">(</span><span class="p" data-group-id="6392558142-7">%{</span><span class="ss">close</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6392558142-8">[</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p" data-group-id="6392558142-8">]</span><span class="p" data-group-id="6392558142-7">}</span><span class="p" data-group-id="6392558142-6">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Quant.Math.MovingAverages</span><span class="o">.</span><span class="n">add_hma!</span><span class="p" data-group-id="6392558142-9">(</span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="ss">:close</span><span class="p">,</span><span class="w"> </span><span class="ss">period</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p" data-group-id="6392558142-9">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">hma_values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Explorer.DataFrame</span><span class="o">.</span><span class="n">to_columns</span><span class="p" data-group-id="6392558142-10">(</span><span class="n">result</span><span class="p" data-group-id="6392558142-10">)</span><span class="p" data-group-id="6392558142-11">[</span><span class="s">&quot;close_hma_4&quot;</span><span class="p" data-group-id="6392558142-11">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_list</span><span class="p" data-group-id="6392558142-12">(</span><span class="n">hma_values</span><span class="p" data-group-id="6392558142-12">)</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">length</span><span class="p" data-group-id="6392558142-13">(</span><span class="n">hma_values</span><span class="p" data-group-id="6392558142-13">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">10</span><span class="w">
+</span><span class="no">true</span></code></pre><h2 id="add_hma!/3-mathematical-properties" class="section-heading"><a href="#add_hma!/3-mathematical-properties" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Mathematical Properties</span></h2><ul><li><strong>Reduced Lag</strong>: Responds faster to price changes than SMA/EMA</li><li><strong>Smoothness</strong>: Maintains smoothness despite reduced lag</li><li><strong>Trend Following</strong>: Excellent for trend identification</li><li><strong>Whipsaws</strong>: May produce more false signals in choppy markets</li></ul>
+  </section>
+</section>
+<section class="detail" id="add_kama!/3">
+
+    <span id="add_kama!/1"></span>
+
+    <span id="add_kama!/2"></span>
+
+  <div class="detail-header">
+    <a href="#add_kama!/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">add_kama!(df, price_column \\ :close, options \\ [])</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> add_kama!(<a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) :: <a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>()</pre>
+
+      </div>
+
+<p>Add Kaufman Adaptive Moving Average (KAMA) to a DataFrame.</p><p>KAMA is an adaptive moving average that adjusts its smoothing based on market
+conditions. It uses an Efficiency Ratio to determine how much noise is in the
+price movement, applying more smoothing during choppy markets and less smoothing
+during trending markets.</p><h2 id="add_kama!/3-parameters" class="section-heading"><a href="#add_kama!/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">dataframe</code> - The Explorer DataFrame</li><li><code class="inline">price_column</code> - The column to calculate KAMA for (default: :close)</li><li><code class="inline">options</code> - Options (keyword list)</li></ul><h2 id="add_kama!/3-options" class="section-heading"><a href="#add_kama!/3-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><code class="inline">:period</code> - Number of periods for efficiency ratio calculation (required, positive integer)</li><li><code class="inline">:fast_sc</code> - Fast smoothing constant (default: 2, for fast EMA equivalent)</li><li><code class="inline">:slow_sc</code> - Slow smoothing constant (default: 30, for slow EMA equivalent)</li><li><code class="inline">:column_name</code> - Name for the KAMA column (default: &quot;close_kama_N&quot; where N is period)</li></ul><h2 id="add_kama!/3-algorithm" class="section-heading"><a href="#add_kama!/3-algorithm" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Algorithm</span></h2><ol><li><strong>Efficiency Ratio (ER)</strong> = |Price Change| / Sum of |Daily Changes|</li><li><strong>Smoothing Constant (SC)</strong> = [ER × (Fastest SC - Slowest SC) + Slowest SC]²</li><li><strong>KAMA</strong> = Previous KAMA + SC × (Current Price - Previous KAMA)</li></ol><p>The Efficiency Ratio ranges from 0 (very choppy) to 1 (perfectly trending).
+KAMA adapts between the fast and slow smoothing constants based on this ratio.</p><h2 id="add_kama!/3-examples" class="section-heading"><a href="#add_kama!/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="c1"># Basic KAMA with 10-period efficiency ratio</span><span class="w">
+</span><span class="n">df</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nc">Quant.Math</span><span class="o">.</span><span class="n">add_kama!</span><span class="p" data-group-id="1292664272-1">(</span><span class="ss">:close</span><span class="p">,</span><span class="w"> </span><span class="ss">period</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="1292664272-1">)</span><span class="w">
+
+</span><span class="c1"># KAMA with custom fast/slow parameters</span><span class="w">
+</span><span class="n">df</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nc">Quant.Math</span><span class="o">.</span><span class="n">add_kama!</span><span class="p" data-group-id="1292664272-2">(</span><span class="ss">:close</span><span class="p">,</span><span class="w"> </span><span class="ss">period</span><span class="p">:</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w"> </span><span class="ss">fast_sc</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">slow_sc</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p" data-group-id="1292664272-2">)</span><span class="w">
+
+</span><span class="c1"># KAMA with custom column name</span><span class="w">
+</span><span class="n">df</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nc">Quant.Math</span><span class="o">.</span><span class="n">add_kama!</span><span class="p" data-group-id="1292664272-3">(</span><span class="ss">:high</span><span class="p">,</span><span class="w"> </span><span class="ss">period</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="ss">column_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;kama_high&quot;</span><span class="p" data-group-id="1292664272-3">)</span></code></pre><h2 id="add_kama!/3-returns" class="section-heading"><a href="#add_kama!/3-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><p>The DataFrame with the KAMA column added. Raises <a href="https://hexdocs.pm/elixir/ArgumentError.html"><code class="inline">ArgumentError</code></a> if parameters
+are invalid or if there's insufficient data.</p>
+  </section>
+</section>
+<section class="detail" id="add_sma!/3">
+
+    <span id="add_sma!/2"></span>
+
+  <div class="detail-header">
+    <a href="#add_sma!/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">add_sma!(dataframe, column, opts \\ [])</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> add_sma!(<a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), <a href="#t:sma_opts/0">sma_opts</a>()) :: <a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>()</pre>
+
+      </div>
+
+<p>Add Simple Moving Average (SMA) to a DataFrame.</p><p>The Simple Moving Average is calculated as the arithmetic mean of values
+over a specified period. Values before the minimum required periods are
+set to NaN.</p><h2 id="add_sma!/3-parameters" class="section-heading"><a href="#add_sma!/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">dataframe</code> - The Explorer DataFrame</li><li><code class="inline">column</code> - The column to calculate SMA for (atom)</li><li><code class="inline">opts</code> - Options (keyword list)</li></ul><h2 id="add_sma!/3-options" class="section-heading"><a href="#add_sma!/3-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><code class="inline">:period</code> - Number of periods for the moving average (default: 20)</li><li><code class="inline">:name</code> - Name for the new column (default: &quot;&lt;column&gt;<em>sma</em>&lt;period&gt;&quot;)</li><li><code class="inline">:nan_policy</code> - How to handle NaN values (default: :drop)</li><li><code class="inline">:min_periods</code> - Minimum periods required (default: same as period)</li><li><code class="inline">:fillna</code> - Value to fill NaN results with (default: nil)</li></ul><h2 id="add_sma!/3-examples" class="section-heading"><a href="#add_sma!/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Explorer.DataFrame</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="2657786274-1">(</span><span class="p" data-group-id="2657786274-2">%{</span><span class="ss">close</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2657786274-3">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">,</span><span class="w"> </span><span class="mf">4.0</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p" data-group-id="2657786274-3">]</span><span class="p" data-group-id="2657786274-2">}</span><span class="p" data-group-id="2657786274-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Quant.Math.MovingAverages</span><span class="o">.</span><span class="n">add_sma!</span><span class="p" data-group-id="2657786274-4">(</span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="ss">:close</span><span class="p">,</span><span class="w"> </span><span class="ss">period</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="2657786274-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="s">&quot;close_sma_3&quot;</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nc">Map</span><span class="o">.</span><span class="n">keys</span><span class="p" data-group-id="2657786274-5">(</span><span class="n">result</span><span class="o">.</span><span class="n">dtypes</span><span class="p" data-group-id="2657786274-5">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+
+</span><span class="gp unselectable">iex&gt; </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Explorer.DataFrame</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="2657786274-6">(</span><span class="p" data-group-id="2657786274-7">%{</span><span class="ss">close</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2657786274-8">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">,</span><span class="w"> </span><span class="mf">4.0</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p" data-group-id="2657786274-8">]</span><span class="p" data-group-id="2657786274-7">}</span><span class="p" data-group-id="2657786274-6">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Quant.Math.MovingAverages</span><span class="o">.</span><span class="n">add_sma!</span><span class="p" data-group-id="2657786274-9">(</span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="ss">:close</span><span class="p">,</span><span class="w"> </span><span class="ss">period</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ma_2&quot;</span><span class="p" data-group-id="2657786274-9">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="s">&quot;ma_2&quot;</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nc">Map</span><span class="o">.</span><span class="n">keys</span><span class="p" data-group-id="2657786274-10">(</span><span class="n">result</span><span class="o">.</span><span class="n">dtypes</span><span class="p" data-group-id="2657786274-10">)</span><span class="w">
+</span><span class="no">true</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="add_tema!/3">
+
+    <span id="add_tema!/1"></span>
+
+    <span id="add_tema!/2"></span>
+
+  <div class="detail-header">
+    <a href="#add_tema!/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">add_tema!(df, price_column \\ :close, options \\ [])</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> add_tema!(<a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) :: <a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>()</pre>
+
+      </div>
+
+<p>Add Triple Exponential Moving Average (TEMA) to a DataFrame.</p><p>The Triple Exponential Moving Average extends the DEMA concept by applying
+a third level of exponential smoothing, further reducing lag while maintaining
+smoothness. TEMA is calculated as:</p><p>EMA1 = EMA(price, period)
+EMA2 = EMA(EMA1, period)
+EMA3 = EMA(EMA2, period)
+TEMA = 3 <em> EMA1 - 3 </em> EMA2 + EMA3</p><p>This provides even faster response to price changes than DEMA while minimizing
+noise. TEMA requires approximately 3 * (period - 1) observations before producing
+valid values.</p><h2 id="add_tema!/3-parameters" class="section-heading"><a href="#add_tema!/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">dataframe</code> - The Explorer DataFrame</li><li><code class="inline">price_column</code> - The column to calculate TEMA for (default: :close)</li><li><code class="inline">options</code> - Options (keyword list)</li></ul><h2 id="add_tema!/3-options" class="section-heading"><a href="#add_tema!/3-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><code class="inline">:period</code> - Number of periods for calculation (required, positive integer)</li><li><code class="inline">:alpha</code> - Smoothing factor (optional, overrides period-based calculation)</li><li><code class="inline">:column_name</code> - Name for the TEMA column (default: &quot;tema_N&quot; where N is period)</li></ul><h2 id="add_tema!/3-examples" class="section-heading"><a href="#add_tema!/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="c1"># Basic TEMA with 10-period</span><span class="w">
+</span><span class="n">df</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nc">Quant.Math</span><span class="o">.</span><span class="n">add_tema!</span><span class="p" data-group-id="0050781958-1">(</span><span class="ss">period</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="0050781958-1">)</span><span class="w">
+
+</span><span class="c1"># TEMA with custom column name and alpha</span><span class="w">
+</span><span class="n">df</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nc">Quant.Math</span><span class="o">.</span><span class="n">add_tema!</span><span class="p" data-group-id="0050781958-2">(</span><span class="ss">:high</span><span class="p">,</span><span class="w"> </span><span class="ss">period</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="ss">column_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tema_high&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">alpha</span><span class="p">:</span><span class="w"> </span><span class="mf">0.15</span><span class="p" data-group-id="0050781958-2">)</span></code></pre><h2 id="add_tema!/3-returns" class="section-heading"><a href="#add_tema!/3-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><p>The DataFrame with the TEMA column added. Raises <a href="https://hexdocs.pm/elixir/ArgumentError.html"><code class="inline">ArgumentError</code></a> if parameters
+are invalid or if there's insufficient data.</p>
+  </section>
+</section>
+<section class="detail" id="add_wma!/3">
+
+    <span id="add_wma!/1"></span>
+
+    <span id="add_wma!/2"></span>
+
+  <div class="detail-header">
+    <a href="#add_wma!/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">add_wma!(df, price_column \\ :close, options \\ [])</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> add_wma!(<a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>()</pre>
+
+      </div>
+
+<p>Add Weighted Moving Average (WMA) column to a DataFrame.</p><p>WMA gives more weight to recent prices with configurable weight vectors.
+Default uses linear weights: [1, 2, 3, ..., period] where recent prices have higher weights.</p><h2 id="add_wma!/3-parameters" class="section-heading"><a href="#add_wma!/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">df</code> - Explorer DataFrame containing price data</li><li><code class="inline">price_column</code> - Name of the column containing prices (default: :close)</li><li><code class="inline">options</code> - Keyword list with the following options:<ul><li><code class="inline">:period</code> - WMA period (required, positive integer)</li><li><code class="inline">:column_name</code> - Name for the WMA column (default: :wma_N where N is period)</li><li><code class="inline">:weights</code> - Custom weight vector as list (default: linear [1, 2, 3, ..., period])</li><li><code class="inline">:validate</code> - Whether to validate inputs (default: true)</li></ul></li></ul><h2 id="add_wma!/3-returns" class="section-heading"><a href="#add_wma!/3-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><ul><li><code class="inline">{:ok, DataFrame.t()}</code> - DataFrame with WMA column added</li><li><code class="inline">{:error, reason}</code> - Error tuple if validation fails</li></ul><h2 id="add_wma!/3-examples" class="section-heading"><a href="#add_wma!/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Explorer.DataFrame</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="4955601214-1">(</span><span class="p" data-group-id="4955601214-2">%{</span><span class="ss">close</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4955601214-3">[</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p" data-group-id="4955601214-3">]</span><span class="p" data-group-id="4955601214-2">}</span><span class="p" data-group-id="4955601214-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Quant.Math.MovingAverages</span><span class="o">.</span><span class="n">add_wma!</span><span class="p" data-group-id="4955601214-4">(</span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="ss">:close</span><span class="p">,</span><span class="w"> </span><span class="ss">period</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="4955601214-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Explorer.DataFrame</span><span class="o">.</span><span class="n">to_columns</span><span class="p" data-group-id="4955601214-5">(</span><span class="n">result</span><span class="p" data-group-id="4955601214-5">)</span><span class="p" data-group-id="4955601214-6">[</span><span class="s">&quot;close_wma_3&quot;</span><span class="p" data-group-id="4955601214-6">]</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nc">Enum</span><span class="o">.</span><span class="n">take</span><span class="p" data-group-id="4955601214-7">(</span><span class="o">-</span><span class="mi">3</span><span class="p" data-group-id="4955601214-7">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nc">Enum</span><span class="o">.</span><span class="n">map</span><span class="p" data-group-id="4955601214-8">(</span><span class="o">&amp;</span><span class="nc">Float</span><span class="o">.</span><span class="n">round</span><span class="p" data-group-id="4955601214-9">(</span><span class="ni">&amp;1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="4955601214-9">)</span><span class="p" data-group-id="4955601214-8">)</span><span class="w">
+</span><span class="p" data-group-id="4955601214-10">[</span><span class="mf">14.67</span><span class="p">,</span><span class="w"> </span><span class="mf">16.67</span><span class="p">,</span><span class="w"> </span><span class="mf">18.67</span><span class="p" data-group-id="4955601214-10">]</span><span class="w">  </span><span class="c1"># Weighted averages with linear weights</span><span class="w">
+
+</span><span class="c1"># Custom weights (equal weights = SMA)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Explorer.DataFrame</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="4955601214-11">(</span><span class="p" data-group-id="4955601214-12">%{</span><span class="ss">close</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4955601214-13">[</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p" data-group-id="4955601214-13">]</span><span class="p" data-group-id="4955601214-12">}</span><span class="p" data-group-id="4955601214-11">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Quant.Math.MovingAverages</span><span class="o">.</span><span class="n">add_wma!</span><span class="p" data-group-id="4955601214-14">(</span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="ss">:close</span><span class="p">,</span><span class="w"> </span><span class="ss">period</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="ss">weights</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4955601214-15">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="4955601214-15">]</span><span class="p" data-group-id="4955601214-14">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Explorer.DataFrame</span><span class="o">.</span><span class="n">to_columns</span><span class="p" data-group-id="4955601214-16">(</span><span class="n">result</span><span class="p" data-group-id="4955601214-16">)</span><span class="p" data-group-id="4955601214-17">[</span><span class="s">&quot;close_wma_3&quot;</span><span class="p" data-group-id="4955601214-17">]</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nc">Enum</span><span class="o">.</span><span class="n">take</span><span class="p" data-group-id="4955601214-18">(</span><span class="o">-</span><span class="mi">3</span><span class="p" data-group-id="4955601214-18">)</span><span class="w">
+</span><span class="p" data-group-id="4955601214-19">[</span><span class="mf">14.0</span><span class="p">,</span><span class="w"> </span><span class="mf">16.0</span><span class="p">,</span><span class="w"> </span><span class="mf">18.0</span><span class="p" data-group-id="4955601214-19">]</span><span class="w">  </span><span class="c1"># Same as SMA with equal weights</span></code></pre><h2 id="add_wma!/3-algorithm" class="section-heading"><a href="#add_wma!/3-algorithm" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Algorithm</span></h2><ul><li>Linear weights (default): WMA<em>t = (P_t×N + P</em>(t-1)×(N-1) + ... + P_(t-N+1)×1) / (1+2+...+N)</li><li>Custom weights: WMA<em>t = (P_t×W_N + P</em>(t-1)×W<em>(N-1) + ... + P</em>(t-N+1)×W_1) / Σ(W_i)</li><li>Returns NaN for periods with insufficient data</li></ul>
+  </section>
+</section>
+<section class="detail" id="analyze_ma_results!/2">
+
+  <div class="detail-header">
+    <a href="#analyze_ma_results!/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">analyze_ma_results!(dataframe, column)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> analyze_ma_results!(<a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>() | <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+<p>Get information about SMA/EMA results in a DataFrame.</p><p>This function helps users understand moving average results,
+especially regarding NaN values that appear before sufficient
+data points are available.</p><h2 id="analyze_ma_results!/2-parameters" class="section-heading"><a href="#analyze_ma_results!/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">dataframe</code> - DataFrame containing moving average results</li><li><code class="inline">column</code> - The moving average column to analyze (atom or string)</li></ul><h2 id="analyze_ma_results!/2-returns" class="section-heading"><a href="#analyze_ma_results!/2-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><p>A map containing:</p><ul><li><code class="inline">:total_rows</code> - Total number of rows</li><li><code class="inline">:nan_count</code> - Number of NaN values</li><li><code class="inline">:valid_count</code> - Number of valid (non-NaN) values</li><li><code class="inline">:first_valid_index</code> - Index of first valid value</li><li><code class="inline">:summary_stats</code> - Min, max, mean of valid values</li></ul><h2 id="analyze_ma_results!/2-examples" class="section-heading"><a href="#analyze_ma_results!/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Explorer.DataFrame</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="7617653874-1">(</span><span class="p" data-group-id="7617653874-2">%{</span><span class="ss">close</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7617653874-3">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">,</span><span class="w"> </span><span class="mf">4.0</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p" data-group-id="7617653874-3">]</span><span class="p" data-group-id="7617653874-2">}</span><span class="p" data-group-id="7617653874-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Quant.Math.MovingAverages</span><span class="o">.</span><span class="n">add_sma!</span><span class="p" data-group-id="7617653874-4">(</span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="ss">:close</span><span class="p">,</span><span class="w"> </span><span class="ss">period</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="7617653874-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Quant.Math.MovingAverages</span><span class="o">.</span><span class="n">analyze_ma_results!</span><span class="p" data-group-id="7617653874-5">(</span><span class="n">result</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;close_sma_3&quot;</span><span class="p" data-group-id="7617653874-5">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">info</span><span class="o">.</span><span class="n">valid_count</span><span class="w">
+</span><span class="mi">3</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/quant/0.1.0-alpha.1" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/quant/0.1.0-alpha.1">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="quant.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
+
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

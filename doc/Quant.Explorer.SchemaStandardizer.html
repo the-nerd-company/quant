@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.4">
+    <meta name="project" content="quant v0.1.0-alpha.1">
+
+
+    <title>Quant.Explorer.SchemaStandardizer — quant v0.1.0-alpha.1</title>
+
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
+
+    <script defer src="dist/sidebar_items-6FC3D5C7.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="api-reference.html" class="sidebar-projectName" translate="no">
+quant
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0-alpha.1
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-module" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of quant</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">Quant.Explorer.SchemaStandardizer</span> 
+      <small class="app-vsn" translate="no">(quant v0.1.0-alpha.1)</small>
+
+    </h1>
+
+  </div>
+
+
+    <section id="moduledoc">
+<p>Comprehensive schema standardization for financial data analysis.</p><p>This module provides unified parameter handling and output schema standardization
+across all providers to ensure complete interoperability for financial analysis.</p><h2 id="module-design-principles" class="section-heading"><a href="#module-design-principles" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Design Principles</span></h2><ol><li><strong>Universal Parameters</strong>: All providers accept the same parameter names</li><li><strong>Automatic Translation</strong>: Provider-specific parameters are translated internally</li><li><strong>Consistent Output</strong>: All DataFrames have identical schemas regardless of provider</li><li><strong>Type Safety</strong>: Strong typing and validation for all fields</li><li><strong>Timezone Handling</strong>: All timestamps normalized to UTC with timezone info</li></ol>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#standardize_history_schema/2" data-no-tooltip="" translate="no">standardize_history_schema(df, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Standardizes historical data DataFrame to consistent schema.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#standardize_params/2" data-no-tooltip="" translate="no">standardize_params(params, provider)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Standardizes query parameters across all providers.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#standardize_quote_schema/2" data-no-tooltip="" translate="no">standardize_quote_schema(df, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Standardizes quote data DataFrame to consistent schema.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#standardize_search_schema/2" data-no-tooltip="" translate="no">standardize_search_schema(df, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Standardizes search results DataFrame to consistent schema.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#supported_currencies/0" data-no-tooltip="" translate="no">supported_currencies()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Lists all supported currencies.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#supported_intervals/0" data-no-tooltip="" translate="no">supported_intervals()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Lists all supported standard intervals.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#supported_periods/0" data-no-tooltip="" translate="no">supported_periods()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Lists all supported standard periods.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#validate_provider_support/2" data-no-tooltip="" translate="no">validate_provider_support(params, provider)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Validates parameter compatibility with provider.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+
+    <div class="functions-list">
+<section class="detail" id="standardize_history_schema/2">
+
+    <span id="standardize_history_schema/1"></span>
+
+  <div class="detail-header">
+    <a href="#standardize_history_schema/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">standardize_history_schema(df, opts \\ [])</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> standardize_history_schema(
+  <a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>(),
+  <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()
+) :: {:ok, <a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Standardizes historical data DataFrame to consistent schema.</p><h2 id="standardize_history_schema/2-standard-historical-data-schema" class="section-heading"><a href="#standardize_history_schema/2-standard-historical-data-schema" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Standard Historical Data Schema</span></h2><ul><li><code class="inline">symbol</code> (string): Stock/crypto symbol</li><li><code class="inline">timestamp</code> (datetime): UTC timestamp with timezone info</li><li><code class="inline">open</code> (f64): Opening price</li><li><code class="inline">high</code> (f64): Highest price</li><li><code class="inline">low</code> (f64): Lowest price</li><li><code class="inline">close</code> (f64): Closing price</li><li><code class="inline">volume</code> (s64): Trading volume</li><li><code class="inline">adj_close</code> (f64): Adjusted closing price (when available)</li><li><code class="inline">market_cap</code> (f64): Market capitalization (crypto only)</li><li><code class="inline">provider</code> (string): Data source provider</li><li><code class="inline">currency</code> (string): Price currency</li><li><code class="inline">timezone</code> (string): Original timezone</li></ul>
+  </section>
+</section>
+<section class="detail" id="standardize_params/2">
+
+  <div class="detail-header">
+    <a href="#standardize_params/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">standardize_params(params, provider)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> standardize_params(
+  <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>(),
+  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()
+) :: {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Standardizes query parameters across all providers.</p><h2 id="standardize_params/2-standard-parameters" class="section-heading"><a href="#standardize_params/2-standard-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Standard Parameters</span></h2><ul><li><code class="inline">:interval</code> - Time interval: &quot;1m&quot;, &quot;5m&quot;, &quot;15m&quot;, &quot;30m&quot;, &quot;1h&quot;, &quot;1d&quot;, &quot;1w&quot;, &quot;1mo&quot;</li><li><code class="inline">:period</code> - Time period: &quot;1d&quot;, &quot;5d&quot;, &quot;1mo&quot;, &quot;3mo&quot;, &quot;6mo&quot;, &quot;1y&quot;, &quot;2y&quot;, &quot;5y&quot;, &quot;10y&quot;, &quot;max&quot;</li><li><code class="inline">:limit</code> - Number of data points to return (integer)</li><li><code class="inline">:start_date</code> - Start date (Date, DateTime, or ISO string)</li><li><code class="inline">:end_date</code> - End date (Date, DateTime, or ISO string)</li><li><code class="inline">:currency</code> - Base currency for crypto quotes: &quot;usd&quot;, &quot;eur&quot;, &quot;btc&quot;, &quot;eth&quot;</li><li><code class="inline">:adjusted</code> - Whether to use adjusted prices (boolean, default: true)</li><li><code class="inline">:api_key</code> - API key for authentication</li></ul><h2 id="standardize_params/2-returns" class="section-heading"><a href="#standardize_params/2-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><p><code class="inline">{:ok, standardized_params}</code> or <code class="inline">{:error, reason}</code></p>
+  </section>
+</section>
+<section class="detail" id="standardize_quote_schema/2">
+
+    <span id="standardize_quote_schema/1"></span>
+
+  <div class="detail-header">
+    <a href="#standardize_quote_schema/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">standardize_quote_schema(df, opts \\ [])</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> standardize_quote_schema(
+  <a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>(),
+  <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()
+) :: {:ok, <a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Standardizes quote data DataFrame to consistent schema.</p><h2 id="standardize_quote_schema/2-standard-quote-data-schema" class="section-heading"><a href="#standardize_quote_schema/2-standard-quote-data-schema" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Standard Quote Data Schema</span></h2><ul><li><code class="inline">symbol</code> (string): Stock/crypto symbol</li><li><code class="inline">price</code> (f64): Current price</li><li><code class="inline">change</code> (f64): Absolute price change</li><li><code class="inline">change_percent</code> (f64): Percentage change</li><li><code class="inline">volume</code> (s64): Current/24h volume</li><li><code class="inline">high_24h</code> (f64): 24-hour high price</li><li><code class="inline">low_24h</code> (f64): 24-hour low price</li><li><code class="inline">market_cap</code> (f64): Market capitalization (when available)</li><li><code class="inline">timestamp</code> (datetime): UTC timestamp</li><li><code class="inline">provider</code> (string): Data source provider</li><li><code class="inline">currency</code> (string): Quote currency</li><li><code class="inline">market_state</code> (string): Market state (open/closed/pre/post)</li></ul>
+  </section>
+</section>
+<section class="detail" id="standardize_search_schema/2">
+
+    <span id="standardize_search_schema/1"></span>
+
+  <div class="detail-header">
+    <a href="#standardize_search_schema/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">standardize_search_schema(df, opts \\ [])</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> standardize_search_schema(
+  <a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>(),
+  <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()
+) :: {:ok, <a href="https://hexdocs.pm/explorer/0.11.1/Explorer.DataFrame.html#t:t/0">Explorer.DataFrame.t</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Standardizes search results DataFrame to consistent schema.</p><h2 id="standardize_search_schema/2-standard-search-results-schema" class="section-heading"><a href="#standardize_search_schema/2-standard-search-results-schema" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Standard Search Results Schema</span></h2><ul><li><code class="inline">symbol</code> (string): Trading symbol</li><li><code class="inline">name</code> (string): Full company/asset name</li><li><code class="inline">type</code> (string): Asset type (stock, etf, crypto, forex, index)</li><li><code class="inline">exchange</code> (string): Primary exchange</li><li><code class="inline">currency</code> (string): Trading currency</li><li><code class="inline">country</code> (string): Country/region</li><li><code class="inline">sector</code> (string): Business sector (when available)</li><li><code class="inline">industry</code> (string): Industry classification (when available)</li><li><code class="inline">market_cap</code> (f64): Market capitalization (when available)</li><li><code class="inline">provider</code> (string): Data source provider</li><li><code class="inline">match_score</code> (f64): Search relevance score (0.0 - 1.0)</li></ul>
+  </section>
+</section>
+<section class="detail" id="supported_currencies/0">
+
+  <div class="detail-header">
+    <a href="#supported_currencies/0" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">supported_currencies()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> supported_currencies() :: [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()]</pre>
+
+      </div>
+
+<p>Lists all supported currencies.</p>
+  </section>
+</section>
+<section class="detail" id="supported_intervals/0">
+
+  <div class="detail-header">
+    <a href="#supported_intervals/0" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">supported_intervals()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> supported_intervals() :: [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()]</pre>
+
+      </div>
+
+<p>Lists all supported standard intervals.</p>
+  </section>
+</section>
+<section class="detail" id="supported_periods/0">
+
+  <div class="detail-header">
+    <a href="#supported_periods/0" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">supported_periods()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> supported_periods() :: [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()]</pre>
+
+      </div>
+
+<p>Lists all supported standard periods.</p>
+  </section>
+</section>
+<section class="detail" id="validate_provider_support/2">
+
+  <div class="detail-header">
+    <a href="#validate_provider_support/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">validate_provider_support(params, provider)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> validate_provider_support(
+  <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>(),
+  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()
+) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Validates parameter compatibility with provider.</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/quant/0.1.0-alpha.1" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/quant/0.1.0-alpha.1">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="quant.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
+
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

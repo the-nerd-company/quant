@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.4">
+    <meta name="project" content="quant v0.1.0-alpha.1">
+
+
+    <title>Quant.Strategy.Optimization.Ranges — quant v0.1.0-alpha.1</title>
+
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
+
+    <script defer src="dist/sidebar_items-6FC3D5C7.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="api-reference.html" class="sidebar-projectName" translate="no">
+quant
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0-alpha.1
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-module" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of quant</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">Quant.Strategy.Optimization.Ranges</span> 
+      <small class="app-vsn" translate="no">(quant v0.1.0-alpha.1)</small>
+
+    </h1>
+
+  </div>
+
+
+    <section id="moduledoc">
+<p>Utilities for generating parameter ranges and combinations.</p><p>This module provides functions to generate parameter grids similar to
+numpy's meshgrid functionality, supporting various range types and
+sampling strategies.</p>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#fibonacci_sequence/2" data-no-tooltip="" translate="no">fibonacci_sequence(start, stop)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Generate Fibonacci sequence within a range.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#linspace/3" data-no-tooltip="" translate="no">linspace(start, stop, num)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Generate linearly spaced values similar to numpy.linspace.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#logarithmic_range/3" data-no-tooltip="" translate="no">logarithmic_range(start, stop, base \\ 2)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Generate logarithmic range.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#parameter_grid/1" data-no-tooltip="" translate="no">parameter_grid(param_map)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Generate all combinations of parameters from a parameter map.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#random_search/2" data-no-tooltip="" translate="no">random_search(param_map, n_samples)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Generate random parameter combinations.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#range/3" data-no-tooltip="" translate="no">range(start, stop, step \\ 1)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Generate a range similar to numpy.arange.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+
+    <div class="functions-list">
+<section class="detail" id="fibonacci_sequence/2">
+
+  <div class="detail-header">
+    <a href="#fibonacci_sequence/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">fibonacci_sequence(start, stop)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> fibonacci_sequence(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>()) :: [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>()]</pre>
+
+      </div>
+
+<p>Generate Fibonacci sequence within a range.</p><p>Useful for parameter values that benefit from Fibonacci spacing.</p><h2 id="fibonacci_sequence/2-examples" class="section-heading"><a href="#fibonacci_sequence/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">fibonacci_sequence</span><span class="p" data-group-id="9482070066-1">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p" data-group-id="9482070066-1">)</span><span class="w">
+</span><span class="p" data-group-id="9482070066-2">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span><span class="w"> </span><span class="mi">34</span><span class="p">,</span><span class="w"> </span><span class="mi">55</span><span class="p">,</span><span class="w"> </span><span class="mi">89</span><span class="p" data-group-id="9482070066-2">]</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="linspace/3">
+
+  <div class="detail-header">
+    <a href="#linspace/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">linspace(start, stop, num)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> linspace(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">number</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">number</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>()) :: [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">float</a>()]</pre>
+
+      </div>
+
+<p>Generate linearly spaced values similar to numpy.linspace.</p><h2 id="linspace/3-examples" class="section-heading"><a href="#linspace/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">linspace</span><span class="p" data-group-id="7355284463-1">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p" data-group-id="7355284463-1">)</span><span class="w">
+</span><span class="p" data-group-id="7355284463-2">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.5</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">7.5</span><span class="p">,</span><span class="w"> </span><span class="mf">10.0</span><span class="p" data-group-id="7355284463-2">]</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="logarithmic_range/3">
+
+    <span id="logarithmic_range/2"></span>
+
+  <div class="detail-header">
+    <a href="#logarithmic_range/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">logarithmic_range(start, stop, base \\ 2)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> logarithmic_range(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>()) :: [
+  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>()
+]</pre>
+
+      </div>
+
+<p>Generate logarithmic range.</p><p>Creates exponentially spaced values, useful for parameters like
+periods or thresholds that work better on a log scale.</p><h2 id="logarithmic_range/3-examples" class="section-heading"><a href="#logarithmic_range/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">logarithmic_range</span><span class="p" data-group-id="3509367136-1">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="3509367136-1">)</span><span class="w">
+</span><span class="p" data-group-id="3509367136-2">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="p" data-group-id="3509367136-2">]</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="parameter_grid/1">
+
+  <div class="detail-header">
+    <a href="#parameter_grid/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">parameter_grid(param_map)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> parameter_grid(%{required(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) =&gt; <a href="https://hexdocs.pm/elixir/Range.html#t:t/0">Range.t</a>() | [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()] | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}) ::
+  {:ok, [%{required(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}]} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Generate all combinations of parameters from a parameter map.</p><p>Takes a map where keys are parameter names and values are either:</p><ul><li>Ranges (e.g., 1..10)</li><li>Lists of specific values (e.g., [5, 10, 15, 20])</li><li>Single values (treated as a list with one element)</li></ul><h2 id="parameter_grid/1-examples" class="section-heading"><a href="#parameter_grid/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">param_map</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="8729912626-1">%{</span><span class="ss">fast_period</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="o">..</span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="ss">slow_period</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8729912626-2">[</span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p" data-group-id="8729912626-2">]</span><span class="p" data-group-id="8729912626-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8729912626-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">combinations</span><span class="p" data-group-id="8729912626-3">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parameter_grid</span><span class="p" data-group-id="8729912626-4">(</span><span class="n">param_map</span><span class="p" data-group-id="8729912626-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">length</span><span class="p" data-group-id="8729912626-5">(</span><span class="n">combinations</span><span class="p" data-group-id="8729912626-5">)</span><span class="w">
+</span><span class="mi">6</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Enum</span><span class="o">.</span><span class="n">all?</span><span class="p" data-group-id="8729912626-6">(</span><span class="n">combinations</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nc">Map</span><span class="o">.</span><span class="n">has_key?</span><span class="p" data-group-id="8729912626-7">(</span><span class="ni">&amp;1</span><span class="p">,</span><span class="w"> </span><span class="ss">:fast_period</span><span class="p" data-group-id="8729912626-7">)</span><span class="p" data-group-id="8729912626-6">)</span><span class="w">
+</span><span class="no">true</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="random_search/2">
+
+  <div class="detail-header">
+    <a href="#random_search/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">random_search(param_map, n_samples)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> random_search(%{required(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) =&gt; <a href="https://hexdocs.pm/elixir/Range.html#t:t/0">Range.t</a>() | [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()]}, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>()) ::
+  {:ok, [%{required(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}]} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Generate random parameter combinations.</p><p>Useful for large parameter spaces where exhaustive search is impractical.</p><h2 id="random_search/2-examples" class="section-heading"><a href="#random_search/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">param_map</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="5783955207-1">%{</span><span class="ss">fast_period</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="o">..</span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="ss">slow_period</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="o">..</span><span class="mi">100</span><span class="p" data-group-id="5783955207-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="5783955207-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">samples</span><span class="p" data-group-id="5783955207-2">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">random_search</span><span class="p" data-group-id="5783955207-3">(</span><span class="n">param_map</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="5783955207-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">length</span><span class="p" data-group-id="5783955207-4">(</span><span class="n">samples</span><span class="p" data-group-id="5783955207-4">)</span><span class="w">
+</span><span class="mi">10</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="range/3">
+
+    <span id="range/2"></span>
+
+  <div class="detail-header">
+    <a href="#range/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">range(start, stop, step \\ 1)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> range(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">number</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">number</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">number</a>()) :: [<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">number</a>()]</pre>
+
+      </div>
+
+<p>Generate a range similar to numpy.arange.</p><h2 id="range/3-examples" class="section-heading"><a href="#range/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">range</span><span class="p" data-group-id="7166971758-1">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p" data-group-id="7166971758-1">)</span><span class="w">
+</span><span class="p" data-group-id="7166971758-2">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p" data-group-id="7166971758-2">]</span><span class="w">
+
+</span><span class="gp unselectable">iex&gt; </span><span class="n">range</span><span class="p" data-group-id="7166971758-3">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="7166971758-3">)</span><span class="w">
+</span><span class="p" data-group-id="7166971758-4">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p" data-group-id="7166971758-4">]</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/quant/0.1.0-alpha.1" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/quant/0.1.0-alpha.1">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="quant.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
+
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

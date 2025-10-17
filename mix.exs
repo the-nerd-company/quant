@@ -85,8 +85,7 @@ defmodule Quant.Explorer.MixProject do
       name: "quant",
       licenses: ["CC-BY-NC-4.0"],
       links: %{
-        "GitHub" => "https://github.com/the-nerd-company/quant",
-        "Commercial License" => "mailto:guillaume@the-nerd-company.com"
+        "GitHub" => "https://github.com/the-nerd-company/quant"
       },
       maintainers: ["Guillaume Dott"],
       files: ~w(lib mix.exs README.md LICENSE CHANGELOG.md),
