@@ -7,6 +7,7 @@ We successfully implemented **Phase 3: Additional Providers** by adding two comp
 ### 🪙 CoinGecko Crypto Data Provider
 
 **Features Implemented:**
+
 - ✅ **Historical Data**: Market chart data with customizable time periods (1-365 days)
 - ✅ **Real-time Quotes**: Current prices with 24h change data and market caps
 - ✅ **Coin Information**: Detailed cryptocurrency metadata and fundamentals
@@ -17,6 +18,7 @@ We successfully implemented **Phase 3: Additional Providers** by adding two comp
 - ✅ **Error Handling**: Graceful handling of API errors and edge cases
 
 **API Examples:**
+
 ```elixir
 # Historical Bitcoin data
 {:ok, df} = Quant.Explorer.fetch("bitcoin", provider: :coin_gecko, days: 30)
@@ -37,6 +39,7 @@ We successfully implemented **Phase 3: Additional Providers** by adding two comp
 ### 📊 Twelve Data Financial API Provider  
 
 **Features Implemented:**
+
 - ✅ **Stock Historical Data**: Complete OHLCV data with multiple intervals
 - ✅ **Real-time Stock Quotes**: Current prices with change data
 - ✅ **Company Profiles**: Comprehensive company information and fundamentals
@@ -47,6 +50,7 @@ We successfully implemented **Phase 3: Additional Providers** by adding two comp
 - ✅ **API Key Management**: Secure API key handling
 
 **API Examples:**
+
 ```elixir
 # Apple stock historical data
 {:ok, df} = Quant.Explorer.fetch("AAPL", provider: :twelve_data, interval: "1day", outputsize: 100)
