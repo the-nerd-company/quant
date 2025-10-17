@@ -1,0 +1,25 @@
+# Strategy optimization examples
+
+```elixir
+Mix.install([
+  {:quant, "0.1.0-alpha.1"},
+  {:explorer, "~> 0.11"},
+  {:kino, "~> 0.12"},
+  {:decimal, "~> 2.0"},
+  {:kino_vega_lite, "~> 0.1.13"},
+  {:vega_lite, "~> 0.1.11"}
+])
+```
+
+## Section
+
+```elixir
+{:ok, df} = Quant.Explorer.history("AAPL", provider: :yahoo_finance, period: "1y")
+param_ranges = %{fast_period: 5..20, slow_period: 20..50}
+{:ok, results} = Quant.Strategy.Optimization.run_combinations(df, :sma_crossover, param_ranges)
+```
+
+```elixir
+# Find best parameters
+best = Quant.Strategy.Optimization.find_best_params(results, :total_return)
+```
