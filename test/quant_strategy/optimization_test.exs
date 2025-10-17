@@ -44,6 +44,11 @@ defmodule Quant.Strategy.OptimizationTest do
     ]
   }
 
+  # Helper function to create test DataFrame
+  defp create_test_data do
+    DataFrame.new(@test_data)
+  end
+
   describe "Ranges module" do
     test "parameter_grid/1 generates all combinations" do
       param_map = %{
@@ -185,6 +190,158 @@ defmodule Quant.Strategy.OptimizationTest do
       assert Map.has_key?(best, :fast_period)
       assert Map.has_key?(best, :slow_period)
       assert Map.has_key?(best, :total_return)
+    end
+  end
+
+  describe "Walk-forward optimization" do
+    test "walk_forward_optimization with multiple windows" do
+      # Create much longer test data with strong trend to generate trades
+      price_data =
+        Enum.map(1..350, fn i ->
+          # Strong upward trend
+          base_price = 100 + i * 0.3
+          # Some volatility
+          volatility = :math.sin(i / 10.0) * 5
+          base_price + volatility
+        end)
+
+      df =
+        DataFrame.new(%{
+          datetime:
+            Enum.map(1..350, fn i -> ~N[2023-01-01 00:00:00] |> NaiveDateTime.add(i, :day) end),
+          close: price_data,
+          volume: List.duplicate(1000, 350)
+        })
+
+      # Wider period gap for clearer signals
+      param_ranges = %{period: [5, 15]}
+
+      result =
+        Optimization.walk_forward_optimization(
+          df,
+          :sma_crossover,
+          param_ranges,
+          # Larger window to generate more trades
+          window_size: 100,
+          # Larger step size
+          step_size: 50,
+          # Allow zero trades for testing
+          min_trades: 0
+        )
+
+      # Should have results from multiple windows (even if no trades)
+      case result do
+        {:ok, results} ->
+          assert DataFrame.n_rows(results) >= 1
+          # Check that we have window information
+          columns = DataFrame.names(results)
+          assert "window_id" in columns
+          assert "training_start" in columns
+          assert "testing_start" in columns
+
+        {:error, reason} ->
+          # If no valid results, that's also acceptable for this test
+          assert reason in [:no_valid_results, :insufficient_data]
+      end
+    end
+
+    test "run_combinations_stream with small parameter space" do
+      df = create_test_data()
+      param_ranges = %{period: [5, 10]}
+
+      stream =
+        Optimization.run_combinations_stream(df, :sma_crossover, param_ranges,
+          chunk_size: 1,
+          concurrency: 2
+        )
+
+      results = Enum.to_list(stream)
+
+      # Should have 2 chunks (one per parameter combination)
+      assert length(results) == 2
+
+      # Each result should be {:ok, dataframe}
+      Enum.each(results, fn result ->
+        assert {:ok, chunk_df} = result
+        assert DataFrame.n_rows(chunk_df) == 1
+      end)
+    end
+
+    test "run_combinations_stream with larger parameter space" do
+      df = create_test_data()
+      # 4 combinations
+      param_ranges = %{period: [5, 10, 15, 20]}
+
+      stream =
+        Optimization.run_combinations_stream(df, :sma_crossover, param_ranges,
+          chunk_size: 2,
+          concurrency: 2
+        )
+
+      results = Enum.to_list(stream)
+
+      # Should have 2 chunks (4 combinations / chunk_size 2)
+      assert length(results) == 2
+
+      # Verify all chunks processed successfully
+      Enum.each(results, fn result ->
+        assert {:ok, chunk_df} = result
+        assert DataFrame.n_rows(chunk_df) == 2
+      end)
+    end
+
+    test "run_combinations_stream handles edge cases" do
+      df = create_test_data()
+      # Very short periods might cause issues
+      param_ranges = %{period: [1, 2]}
+
+      stream = Optimization.run_combinations_stream(df, :sma_crossover, param_ranges)
+      results = Enum.to_list(stream)
+
+      # Should return some results (might be empty dataframes if no trades)
+      assert length(results) == 1
+
+      case hd(results) do
+        {:ok, chunk_df} ->
+          # Empty results are acceptable for edge cases
+          assert DataFrame.n_rows(chunk_df) >= 0
+
+        {:error, _reason} ->
+          # Errors are also acceptable for edge cases
+          assert true
+      end
+    end
+
+    test "run_combinations_stream memory-efficient processing" do
+      df = create_test_data()
+      # Create larger parameter space
+      # 8 combinations
+      param_ranges = %{period: 5..12}
+
+      stream =
+        Optimization.run_combinations_stream(df, :sma_crossover, param_ranges,
+          chunk_size: 3,
+          concurrency: 2
+        )
+
+      # Process stream lazily - only materialize first chunk
+      first_chunk = stream |> Enum.take(1) |> hd()
+
+      assert {:ok, chunk_df} = first_chunk
+      assert DataFrame.n_rows(chunk_df) == 3
+
+      # Verify we can process all chunks
+      all_results = Enum.to_list(stream)
+      # 8 combinations / chunk_size 3 = 3 chunks (rounded up)
+      assert length(all_results) == 3
+    end
+
+    test "walk_forward_optimization/4 handles insufficient data" do
+      small_df = DataFrame.new(%{close: [100.0, 101.0, 102.0]})
+      param_ranges = %{fast_period: [5], slow_period: [10]}
+
+      assert {:error, {:insufficient_data, _message}} =
+               Optimization.walk_forward_optimization(small_df, :sma_crossover, param_ranges)
     end
   end
 

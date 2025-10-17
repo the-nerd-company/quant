@@ -5,7 +5,7 @@ defmodule Quant.Explorer.MixProject do
   def project do
     [
       app: :quant_explorer,
-      version: "0.1.0",
+      version: "0.1.0-alpha.1",
       elixir: "~> 1.18",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -51,7 +51,7 @@ defmodule Quant.Explorer.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger, :inets, :ssl],
+      extra_applications: [:logger, :inets, :ssl, :pythonx],
       mod: {Quant.Explorer.Application, []}
     ]
   end
@@ -75,10 +75,9 @@ defmodule Quant.Explorer.MixProject do
   end
 
   defp description do
-    "High-performance standardized financial data API for Elixir with Explorer DataFrames. " <>
-      "Fetch financial data from multiple providers with universal parameters and identical output schemas. " <>
-      "Includes comprehensive mathematical indicators (RSI, DEMA, HMA, KAMA, TEMA, WMA) with " <>
-      "Python-validated accuracy for professional quantitative analysis."
+    "Standardized financial data API for Elixir with Explorer DataFrames. " <>
+      "Fetch from multiple providers with universal parameters. " <>
+      "Includes technical indicators (RSI, DEMA, HMA, KAMA, TEMA, WMA) with Python-validated accuracy."
   end
 
   defp package do

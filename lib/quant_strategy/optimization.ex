@@ -154,6 +154,74 @@ defmodule Quant.Strategy.Optimization do
   end
 
   @doc """
+  Run parameter combinations using memory-efficient streaming.
+
+  Processes massive parameter spaces (10,000+ combinations) in chunks
+  without loading all results into memory simultaneously. Returns a stream
+  of result chunks for further processing.
+
+  ## Parameters
+
+  - `dataframe` - Historical OHLCV data
+  - `strategy_type` - Strategy type atom
+  - `param_ranges` - Map of parameter names to ranges or lists
+  - `opts` - Streaming options
+
+  ## Streaming Options
+
+  - `:chunk_size` - Combinations per chunk (default: 100)
+  - `:concurrency` - Parallel tasks per chunk (default: 4)
+  - `:timeout` - Timeout per chunk in ms (default: 30_000)
+  - `:memory_limit` - Max memory usage in MB (default: 500)
+
+  ## Returns
+
+  Stream of `{:ok, chunk_results_df}` or `{:error, reason}`
+
+  ## Examples
+
+      # Stream massive parameter space
+      param_ranges = %{period: 1..100, threshold: 0.01..0.10//0.01}  # 10,000 combos
+      stream = run_combinations_stream(df, :sma_crossover, param_ranges, chunk_size: 50)
+
+      # Process results incrementally
+      best_result =
+        stream
+        |> Stream.filter(fn {:ok, _chunk} -> true; _ -> false end)
+        |> Stream.map(fn {:ok, chunk} -> Results.find_best_params(chunk) end)
+        |> Enum.max_by(fn result -> result.total_return end)
+
+      # Export results as they come
+      stream
+      |> Stream.each(fn {:ok, chunk} -> export_chunk_to_csv(chunk) end)
+      |> Stream.run()
+  """
+  @spec run_combinations_stream(
+          DataFrame.t(),
+          strategy_type(),
+          param_ranges(),
+          optimization_options()
+        ) :: Enumerable.t()
+  def run_combinations_stream(dataframe, strategy_type, param_ranges, opts \\ []) do
+    chunk_size = Keyword.get(opts, :chunk_size, 100)
+    concurrency = Keyword.get(opts, :concurrency, 4)
+    timeout = Keyword.get(opts, :timeout, 30_000)
+
+    case Ranges.parameter_grid(param_ranges) do
+      {:ok, param_combinations} ->
+        param_combinations
+        |> Stream.chunk_every(chunk_size)
+        |> Stream.map(fn chunk ->
+          process_parameter_chunk(dataframe, strategy_type, chunk, opts, concurrency, timeout)
+        end)
+
+      {:error, reason} ->
+        Stream.repeatedly(fn -> {:error, {:streaming_optimization_failed, reason}} end)
+        |> Stream.take(1)
+    end
+  end
+
+  @doc """
   Find the best parameter combination based on a specific metric.
 
   ## Parameters
@@ -238,9 +306,46 @@ defmodule Quant.Strategy.Optimization do
   """
   @spec walk_forward_optimization(DataFrame.t(), strategy_type(), param_ranges(), keyword()) ::
           optimization_result()
-  def walk_forward_optimization(_dataframe, _strategy_type, _param_ranges, _opts \\ []) do
-    # Implementation will be added in Phase 3
-    {:error, :not_implemented}
+  def walk_forward_optimization(dataframe, strategy_type, param_ranges, opts \\ []) do
+    # 1 year default
+    training_window = Keyword.get(opts, :training_window, 252)
+    # 1 quarter default
+    testing_window = Keyword.get(opts, :testing_window, 63)
+    # 1 month default
+    step_size = Keyword.get(opts, :step_size, 21)
+    # minimum trades required
+    min_trades = Keyword.get(opts, :min_trades, 5)
+
+    total_rows = DataFrame.n_rows(dataframe)
+    min_required_rows = training_window + testing_window
+
+    if total_rows < min_required_rows do
+      {:error, {:insufficient_data, "Need at least #{min_required_rows} rows, got #{total_rows}"}}
+    else
+      walk_forward_windows =
+        generate_walk_forward_windows(
+          total_rows,
+          training_window,
+          testing_window,
+          step_size
+        )
+
+      if Enum.empty?(walk_forward_windows) do
+        {:error, {:no_valid_windows, "No valid walk-forward windows found"}}
+      else
+        results =
+          process_walk_forward_windows(
+            dataframe,
+            strategy_type,
+            param_ranges,
+            walk_forward_windows,
+            min_trades,
+            opts
+          )
+
+        process_walk_forward_results(results)
+      end
+    end
   end
 
   @doc """
@@ -481,6 +586,156 @@ defmodule Quant.Strategy.Optimization do
     end
   end
 
+  # Walk-forward optimization helper functions
+
+  defp generate_walk_forward_windows(total_rows, training_window, testing_window, step_size) do
+    Stream.iterate(0, &(&1 + step_size))
+    |> Stream.map(fn start_idx ->
+      training_start = start_idx
+      training_end = start_idx + training_window - 1
+      testing_start = training_end + 1
+      testing_end = testing_start + testing_window - 1
+
+      if testing_end < total_rows do
+        %{
+          training: {training_start, training_end},
+          testing: {testing_start, testing_end},
+          window_id: div(start_idx, step_size) + 1
+        }
+      else
+        nil
+      end
+    end)
+    |> Stream.take_while(&(&1 != nil))
+    |> Enum.to_list()
+  end
+
+  defp process_walk_forward_windows(
+         dataframe,
+         strategy_type,
+         param_ranges,
+         windows,
+         min_trades,
+         opts
+       ) do
+    results =
+      windows
+      |> Enum.map(fn window ->
+        process_single_walk_forward_window(
+          dataframe,
+          strategy_type,
+          param_ranges,
+          window,
+          min_trades,
+          opts
+        )
+      end)
+      |> Enum.filter(fn
+        {:ok, _} -> true
+        {:error, _} -> false
+      end)
+      |> Enum.map(fn {:ok, result} -> result end)
+
+    {:ok, results}
+  rescue
+    e -> {:error, {:walk_forward_failed, Exception.message(e)}}
+  end
+
+  defp process_single_walk_forward_window(
+         dataframe,
+         strategy_type,
+         param_ranges,
+         window,
+         min_trades,
+         opts
+       ) do
+    %{training: {train_start, train_end}, testing: {test_start, test_end}, window_id: _window_id} =
+      window
+
+    # Extract training and testing data
+    training_df = DataFrame.slice(dataframe, train_start, train_end - train_start + 1)
+    testing_df = DataFrame.slice(dataframe, test_start, test_end - test_start + 1)
+
+    # Optimize parameters on training data
+    with {:ok, training_results} <-
+           run_combinations(training_df, strategy_type, param_ranges, opts),
+         {:ok, best_params} <- find_best_params_for_training(training_results),
+         {:ok, test_results} <-
+           test_params_on_out_of_sample(testing_df, strategy_type, best_params, opts) do
+      validate_and_format_results(test_results, best_params, min_trades, window)
+    end
+  end
+
+  defp find_best_params_for_training(training_results) do
+    case find_best_params(training_results, :total_return) do
+      nil -> {:error, :no_best_params_found}
+      params -> {:ok, params}
+    end
+  end
+
+  defp test_params_on_out_of_sample(testing_df, strategy_type, best_params, opts) do
+    strategy = create_strategy(strategy_type, best_params)
+
+    case Strategy.backtest(testing_df, strategy, extract_backtest_opts(opts)) do
+      {:ok, results} -> {:ok, {best_params, results}}
+      {:error, reason} -> {:error, {:backtest_failed, reason}}
+    end
+  end
+
+  defp validate_and_format_results(
+         {best_params, test_results},
+         _best_params_unused,
+         min_trades,
+         window
+       ) do
+    %{window_id: window_id, training: {train_start, train_end}, testing: {test_start, test_end}} =
+      window
+
+    test_metrics = extract_performance_metrics(best_params, test_results, [])
+    trade_count = Map.get(test_metrics, :trade_count, 0)
+
+    if trade_count >= min_trades do
+      result =
+        Map.merge(test_metrics, %{
+          window_id: window_id,
+          training_start: train_start,
+          training_end: train_end,
+          testing_start: test_start,
+          testing_end: test_end
+        })
+
+      {:ok, result}
+    else
+      {:error, {:insufficient_trades, trade_count}}
+    end
+  end
+
+  defp process_walk_forward_results(results) do
+    case results do
+      {:ok, [_ | _] = wf_results} ->
+        {:ok, combine_walk_forward_results(wf_results)}
+
+      {:ok, []} ->
+        {:error, :no_valid_results}
+
+      {:error, reason} ->
+        {:error, reason}
+    end
+  end
+
+  defp combine_walk_forward_results(wf_results) do
+    # Combine all walk-forward results into a single DataFrame
+    Results.combine_results(wf_results)
+  end
+
+  defp extract_backtest_opts(opts) do
+    [
+      initial_capital: Keyword.get(opts, :initial_capital, 10_000.0),
+      commission: Keyword.get(opts, :commission, 0.001),
+      slippage: Keyword.get(opts, :slippage, 0.0005)
+    ]
+  end
+
   defp calculate_sortino_ratio(returns, total_return) do
     downside_returns = Enum.filter(returns, &(&1 < 0))
 
@@ -496,5 +751,32 @@ defmodule Quant.Strategy.Optimization do
 
       if downside_deviation > 0, do: total_return / downside_deviation, else: 0.0
     end
+  end
+
+  # Helper function for streaming parameter optimization
+  defp process_parameter_chunk(dataframe, strategy_type, chunk, opts, concurrency, timeout) do
+    results =
+      chunk
+      |> Task.async_stream(
+        fn params ->
+          run_single_combination(dataframe, strategy_type, params, opts)
+        end,
+        max_concurrency: concurrency,
+        timeout: timeout,
+        on_timeout: :kill_task
+      )
+      |> Enum.map(fn
+        {:ok, result} -> result
+        {:exit, reason} -> {:error, {:task_failed, reason}}
+      end)
+      |> Enum.filter(fn
+        {:ok, _} -> true
+        _ -> false
+      end)
+      |> Enum.map(fn {:ok, result} -> result end)
+
+    {:ok, Results.combine_results(results)}
+  rescue
+    e -> {:error, {:chunk_processing_failed, Exception.message(e)}}
   end
 end
