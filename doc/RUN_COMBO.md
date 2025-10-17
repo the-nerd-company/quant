@@ -111,7 +111,7 @@ end
 #### Phase 1: Basic Parameter Sweeping (Week 1)
 
 **Core Functionality:**
-- [ ] Implement `run_combinations/4` for single-parameter sweeps
+- [x] Implement `run_combinations/4` for single-parameter sweeps
 - [ ] Add basic SMA crossover parameter optimization
 - [ ] Create result DataFrame structure with consistent schema
 - [ ] Implement `find_best_params/2` for metric-based ranking
@@ -345,7 +345,7 @@ This optimization framework will seamlessly integrate with the existing Quant li
 
 ### Immediate Implementation (Phase 1-4)
 
-1. [ ] **Create basic optimization module structure** (Day 1)
+1. [x] **Create basic optimization module structure** (Day 1)
 2. [ ] **Implement single-parameter sweep functionality** (Days 2-3)
 3. [ ] **Add multi-parameter grid search** (Days 4-5)
 4. [ ] **Implement parallel processing** (Days 6-7)
