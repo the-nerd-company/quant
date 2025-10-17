@@ -1,7 +1,7 @@
 import Config
 
 # Test environment configuration
-config :quant_explorer,
+config :quant,
   # Higher rate limits for tests (using mocked responses mostly)
   rate_limits: %{
     yahoo_finance: 1000,

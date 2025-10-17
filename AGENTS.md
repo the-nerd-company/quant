@@ -1,8 +1,8 @@
-# AGENT.md - quant_explorer Project Instructions
+# AGENT.md - quant Project Instructions
 
 ## Project Overview
 
-Create `quant_explorer` - A comprehensive Elixir library for fetching financial and cryptocurrency data from multiple providers and loading it directly into Explorer DataFrames for high-performance analysis.
+Create `quant` - A comprehensive Elixir library for fetching financial and cryptocurrency data from multiple providers and loading it directly into Explorer DataFrames for high-performance analysis.
 
 ## Core Vision
 
@@ -16,10 +16,10 @@ Create `quant_explorer` - A comprehensive Elixir library for fetching financial 
 ## Project Structure
 
 ```
-quant_explorer/
+quant/
 ├── lib/
-│   ├── quant_explorer.ex                    # Main API module
-│   ├── quant_explorer/
+│   ├── quant.ex                    # Main API module
+│   ├── quant/
 │   │   ├── providers/                     # Data provider implementations
 │   │   │   ├── behaviour.ex               # Provider behaviour definition
 │   │   │   ├── yahoo_finance.ex           # Yahoo Finance implementation
@@ -37,7 +37,7 @@ quant_explorer/
 │   │   ├── cache.ex                       # Caching layer (ETS-based)
 │   │   ├── data_transformer.ex            # Data normalization utilities
 │   │   └── config.ex                      # Configuration management
-│   └── quant_explorer/
+│   └── quant/
 │       └── application.ex                 # OTP application
 ├── test/
 │   ├── fin_explorer_test.exs
@@ -180,7 +180,7 @@ All providers must return DataFrames with standardized column names:
 
 ```elixir
 # config/config.exs
-config :quant_explorer,
+config :quant,
   # Default provider if none specified
   default_provider: :yahoo_finance,
   
@@ -526,7 +526,7 @@ The advanced rate limiting system demonstrates enterprise-grade architecture:
 
 ## Getting Started Checklist
 
-- [x] Create new Mix project: `mix new quant_explorer --sup`
+- [x] Create new Mix project: `mix new quant --sup`
 - [x] Add dependencies to mix.exs
 - [x] Set up basic project structure
 - [x] Implement Provider behaviour

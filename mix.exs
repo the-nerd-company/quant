@@ -4,7 +4,7 @@ defmodule Quant.Explorer.MixProject do
 
   def project do
     [
-      app: :quant_explorer,
+      app: :quant,
       version: "0.1.0-alpha.1",
       elixir: "~> 1.18",
       start_permanent: Mix.env() == :prod,
@@ -82,10 +82,10 @@ defmodule Quant.Explorer.MixProject do
 
   defp package do
     [
-      name: "quant_explorer",
+      name: "quant",
       licenses: ["CC-BY-NC-4.0"],
       links: %{
-        "GitHub" => "https://github.com/the-nerd-company/quant_explorer",
+        "GitHub" => "https://github.com/the-nerd-company/quant",
         "Commercial License" => "mailto:guillaume@the-nerd-company.com"
       },
       maintainers: ["Guillaume Dott"],

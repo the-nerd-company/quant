@@ -14,7 +14,7 @@ integration_mode = "--include" in System.argv() and "integration" in System.argv
 if integration_mode do
   # Use real HTTP client for integration tests
   IO.puts("Running in integration test mode - using real HTTP client")
-  Application.put_env(:quant_explorer, :http_client, Quant.Explorer.HttpClient)
+  Application.put_env(:quant, :http_client, Quant.Explorer.HttpClient)
   Logger.configure(level: :info)
 
   # Still load test helper for integration tests
@@ -31,13 +31,13 @@ else
   {:ok, _} = Quant.Explorer.HttpMock.start_link()
 
   # Use mock HTTP client for fast tests
-  Application.put_env(:quant_explorer, :http_client, Quant.Explorer.HttpClient.Mock)
+  Application.put_env(:quant, :http_client, Quant.Explorer.HttpClient.Mock)
 end
 
 # Configure test environment
 # Configure test environment
-Application.put_env(:quant_explorer, :cache_ttl, :timer.seconds(1))
-Application.put_env(:quant_explorer, :telemetry_enabled, false)
+Application.put_env(:quant, :cache_ttl, :timer.seconds(1))
+Application.put_env(:quant, :telemetry_enabled, false)
 
 if not integration_mode do
   # Start HTTP mock for mocked tests only

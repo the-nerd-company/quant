@@ -278,7 +278,7 @@ Perfect for financial analysis in Livebook notebooks:
 
 ```elixir
 # Livebook Cell 1: Setup
-Mix.install([{:quant_explorer, github: "the-nerd-company/quant_explorer"}])
+Mix.install([{:quant, github: "the-nerd-company/quant"}])
 
 # Livebook Cell 2: Multi-Provider Data Collection  
 alpha_key = System.fetch_env!("ALPHA_VANTAGE_API_KEY")

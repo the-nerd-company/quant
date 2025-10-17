@@ -14,7 +14,7 @@ defmodule Quant.Explorer.Providers.AlphaVantage do
   Requires an API key from Alpha Vantage. Set the ALPHA_VANTAGE_API_KEY environment variable
   or configure it in your application config:
 
-      config :quant_explorer,
+      config :quant,
         api_keys: %{
           alpha_vantage: "your_api_key_here"
         }
@@ -46,7 +46,7 @@ defmodule Quant.Explorer.Providers.AlphaVantage do
 
   # API configuration
   @base_url "https://www.alphavantage.co/query"
-  @user_agent "Quant.Explorer/#{Mix.Project.config()[:version]} (+https://github.com/the-nerd-company/quant_explorer)"
+  @user_agent "Quant.Explorer/#{Mix.Project.config()[:version]} (+https://github.com/the-nerd-company/quant)"
   @default_timeout 30_000
 
   # Supported intervals and periods

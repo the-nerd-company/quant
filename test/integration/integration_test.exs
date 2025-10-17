@@ -85,10 +85,10 @@ defmodule Quant.Explorer.IntegrationTest do
     test "Configuration is properly loaded" do
       # Test that application is loaded
       assert Application.started_applications()
-             |> Enum.any?(fn {app, _, _} -> app == :quant_explorer end)
+             |> Enum.any?(fn {app, _, _} -> app == :quant end)
 
       # Test rate limiting backend if configured
-      backend = Application.get_env(:quant_explorer, :rate_limiting_backend)
+      backend = Application.get_env(:quant, :rate_limiting_backend)
 
       if backend do
         assert backend in [:ets, :redis]

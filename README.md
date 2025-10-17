@@ -149,7 +149,7 @@ combined_df = DataFrame.concat_rows([binance_btc, yahoo_aapl, alpha_msft])
 # Add to mix.exs
 def deps do
   [
-    {:quant_explorer, github: "the-nerd-company/quant"}
+    {:quant, github: "the-nerd-company/quant"}
   ]
 end
 ```
@@ -219,7 +219,7 @@ All functions require an explicit `provider:` parameter. There are no default pr
 # Add to mix.exs
 def deps do
   [
-    {:quant_explorer, github: "the-nerd-company/quant_explorer"}
+    {:quant, github: "the-nerd-company/quant"}
   ]
 end
 ```
@@ -502,7 +502,7 @@ export TWELVE_DATA_API_KEY="your_api_key_here"
 Or in your application config:
 
 ```elixir
-config :quant_explorer,
+config :quant,
   api_keys: %{
     alpha_vantage: "your_api_key_here",
     twelve_data: "your_api_key_here"
@@ -574,7 +574,7 @@ Perfect for data science and research in Livebook:
 
 ```elixir
 # Cell 1: Setup
-Mix.install([{:quant_explorer, github: "the-nerd-company/quant_explorer"}])
+Mix.install([{:quant, github: "the-nerd-company/quant"}])
 
 # Cell 2: Get data with inline API key
 api_key = "your_alpha_vantage_api_key"

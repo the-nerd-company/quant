@@ -4,7 +4,7 @@ import Config
 # This configuration is loaded during runtime and can access system environment variables.
 
 if config_env() == :prod do
-  config :quant_explorer,
+  config :quant,
     # Production rate limits (more conservative)
     rate_limits: %{
       yahoo_finance: 100,
@@ -41,16 +41,16 @@ end
 
 if System.get_env("FIN_EXPLORER_LOG_LEVEL") do
   log_level = System.get_env("FIN_EXPLORER_LOG_LEVEL") |> String.to_existing_atom()
-  config :quant_explorer, log_level: log_level
+  config :quant, log_level: log_level
   config :logger, level: log_level
 end
 
 if System.get_env("FIN_EXPLORER_HTTP_TIMEOUT") do
   timeout = System.get_env("FIN_EXPLORER_HTTP_TIMEOUT") |> String.to_integer()
-  config :quant_explorer, http_timeout: timeout
+  config :quant, http_timeout: timeout
 end
 
 if System.get_env("FIN_EXPLORER_CACHE_TTL") do
   ttl = System.get_env("FIN_EXPLORER_CACHE_TTL") |> String.to_integer()
-  config :quant_explorer, cache_ttl: ttl
+  config :quant, cache_ttl: ttl
 end

@@ -2,7 +2,7 @@
 
 ```elixir
 Mix.install([
-  {:quant_explorer, github: "the-nerd-company/quant_explorer", branch: "main"},
+  {:quant, github: "the-nerd-company/quant", branch: "main"},
   {:kino, "~> 0.12.0"},
   {:vega_lite, "~> 0.1.8"},
   {:kino_vega_lite, "~> 0.1.11"},

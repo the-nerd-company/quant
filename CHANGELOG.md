@@ -53,5 +53,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Commercial licensing available separately
 - Protects against unauthorized commercial exploitation while ensuring community access
 
-[Unreleased]: https://github.com/the-nerd-company/quant_explorer/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/the-nerd-company/quant_explorer/releases/tag/v0.1.0
+[Unreleased]: https://github.com/the-nerd-company/quant/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/the-nerd-company/quant/releases/tag/v0.1.0

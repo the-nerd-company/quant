@@ -134,7 +134,7 @@ We successfully implemented **Phase 3: Additional Providers** by adding two comp
 
 ## 🚀 Next Phase Ready
 
-With **Phase 3** complete, `quant_explorer` now supports **5 comprehensive financial data providers**:
+With **Phase 3** complete, `quant` now supports **5 comprehensive financial data providers**:
 
 1. **Yahoo Finance** - Free stock data
 2. **Alpha Vantage** - Premium stock & forex 

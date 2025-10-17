@@ -22,7 +22,7 @@ defmodule Quant.Explorer.Providers.TwelveData do
   API key is required for most endpoints:
 
   ```elixir
-  config :quant_explorer,
+  config :quant,
     api_keys: %{
       twelve_data: "your_api_key_here"
     }
@@ -602,7 +602,7 @@ defmodule Quant.Explorer.Providers.TwelveData do
   end
 
   defp get_api_key do
-    case Application.get_env(:quant_explorer, :api_keys, %{}) do
+    case Application.get_env(:quant, :api_keys, %{}) do
       %{twelve_data: api_key} when is_binary(api_key) ->
         api_key
 
