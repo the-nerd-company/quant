@@ -51,7 +51,7 @@ defmodule Quant.Explorer.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger, :inets, :ssl, :pythonx],
+      extra_applications: [:logger, :inets, :ssl],
       mod: {Quant.Explorer.Application, []}
     ]
   end
