@@ -78,7 +78,7 @@ defmodule Quant.Strategy.Optimization.Export do
   @spec to_json(DataFrame.t(), String.t(), keyword()) :: {:ok, String.t()} | {:error, term()}
   def to_json(results, filename, opts \\ []) do
     _precision = Keyword.get(opts, :precision, 4)
-    pretty = Keyword.get(opts, :pretty, true)
+    _pretty = Keyword.get(opts, :pretty, true)
 
     try do
       # Ensure filename has .json extension
@@ -88,12 +88,7 @@ defmodule Quant.Strategy.Optimization.Export do
       data = convert_dataframe_to_maps(results)
 
       # Encode to JSON
-      json_data =
-        if pretty do
-          Jason.encode!(data, pretty: true)
-        else
-          Jason.encode!(data)
-        end
+      json_data = JSON.encode!(data)
 
       # Write to file
       case File.write(json_filename, json_data) do
@@ -345,7 +340,7 @@ defmodule Quant.Strategy.Optimization.Export do
   end
 
   defp export_summary_json(summary, filename) do
-    json_data = Jason.encode!(summary, pretty: true)
+    json_data = JSON.encode!(summary)
 
     case File.write(filename, json_data) do
       :ok -> {:ok, filename}
