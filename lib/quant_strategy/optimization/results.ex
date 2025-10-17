@@ -6,6 +6,7 @@ defmodule Quant.Strategy.Optimization.Results do
   parameter optimization results.
   """
 
+  require Explorer.DataFrame
   alias Explorer.DataFrame
   alias Explorer.Series
 
@@ -74,33 +75,11 @@ defmodule Quant.Strategy.Optimization.Results do
       nil
     else
       case DataFrame.names(dataframe) do
-        names when length(names) > 0 ->
+        [_ | _] = names ->
           metric_str = Atom.to_string(metric)
 
-          if metric_str in names do
-            # Find the row with the maximum value for the metric
-            metric_series = DataFrame.pull(dataframe, metric_str)
-            max_value = Series.max(metric_series)
+          find_best_metric_row(dataframe, names, metric_str)
 
-            # Get the index of the maximum value
-            max_index =
-              metric_series
-              |> Series.to_list()
-              |> Enum.find_index(&(&1 == max_value))
-
-            if max_index do
-              # Extract the row with the best performance
-              dataframe
-              |> DataFrame.slice(max_index, 1)
-              |> DataFrame.to_rows()
-              |> List.first()
-              |> convert_string_keys_to_atoms()
-            else
-              nil
-            end
-          else
-            nil
-          end
         _ ->
           nil
       end
@@ -126,8 +105,8 @@ defmodule Quant.Strategy.Optimization.Results do
 
     if metric_str in DataFrame.names(dataframe) do
       case order do
-        :desc -> DataFrame.sort_by(dataframe, [desc: metric_str])
-        :asc -> DataFrame.sort_by(dataframe, [asc: metric_str])
+        :desc -> DataFrame.sort_by(dataframe, desc: metric_str)
+        :asc -> DataFrame.sort_by(dataframe, asc: metric_str)
       end
     else
       dataframe
@@ -333,19 +312,8 @@ defmodule Quant.Strategy.Optimization.Results do
         std_dev = calculate_standard_deviation(metric_values, mean_performance)
 
         # Find parameters with performance within threshold of mean
-        stable_indices =
-          metric_values
-          |> Enum.with_index()
-          |> Enum.filter(fn {value, _index} ->
-            abs(value - mean_performance) <= threshold * std_dev
-          end)
-          |> Enum.map(fn {_value, index} -> index end)
-
-        stable_params =
-          stable_indices
-          |> Enum.map(&DataFrame.slice(dataframe, &1, 1))
-          |> Enum.map(&(DataFrame.to_rows(&1) |> List.first()))
-          |> Enum.map(&convert_string_keys_to_atoms/1)
+        stable_indices = find_stable_indices(metric_values, mean_performance, threshold, std_dev)
+        stable_params = extract_stable_params(dataframe, stable_indices)
 
         analysis = %{
           metric: metric,
@@ -368,6 +336,53 @@ defmodule Quant.Strategy.Optimization.Results do
   end
 
   # Private functions
+
+  defp find_best_metric_row(dataframe, names, metric_str) do
+    if metric_str in names do
+      # Find the row with the maximum value for the metric
+      metric_series = DataFrame.pull(dataframe, metric_str)
+      max_value = Series.max(metric_series)
+
+      # Get the index of the maximum value
+      max_index =
+        metric_series
+        |> Series.to_list()
+        |> Enum.find_index(&(&1 == max_value))
+
+      extract_best_row(dataframe, max_index)
+    else
+      nil
+    end
+  end
+
+  defp extract_best_row(dataframe, max_index) do
+    if max_index do
+      # Extract the row with the best performance
+      dataframe
+      |> DataFrame.slice(max_index, 1)
+      |> DataFrame.to_rows()
+      |> List.first()
+      |> convert_string_keys_to_atoms()
+    else
+      nil
+    end
+  end
+
+  defp find_stable_indices(metric_values, mean_performance, threshold, std_dev) do
+    metric_values
+    |> Enum.with_index()
+    |> Enum.filter(fn {value, _index} ->
+      abs(value - mean_performance) <= threshold * std_dev
+    end)
+    |> Enum.map(fn {_value, index} -> index end)
+  end
+
+  defp extract_stable_params(dataframe, stable_indices) do
+    stable_indices
+    |> Enum.map(&DataFrame.slice(dataframe, &1, 1))
+    |> Enum.map(&(DataFrame.to_rows(&1) |> List.first()))
+    |> Enum.map(&convert_string_keys_to_atoms/1)
+  end
 
   defp convert_string_keys_to_atoms(map) when is_map(map) do
     map

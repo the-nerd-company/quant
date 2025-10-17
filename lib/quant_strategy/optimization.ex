@@ -40,13 +40,13 @@ defmodule Quant.Strategy.Optimization do
   @type strategy_type :: atom()
   @type param_ranges :: %{atom() => Range.t() | [any()]}
   @type optimization_options :: [
-    initial_capital: float(),
-    commission: float(),
-    slippage: float(),
-    concurrency: pos_integer(),
-    progress_callback: function() | nil,
-    store_backtest_data: boolean()
-  ]
+          initial_capital: float(),
+          commission: float(),
+          slippage: float(),
+          concurrency: pos_integer(),
+          progress_callback: function() | nil,
+          store_backtest_data: boolean()
+        ]
   @type optimization_result :: {:ok, DataFrame.t()} | {:error, term()}
 
   @doc """
@@ -85,7 +85,8 @@ defmodule Quant.Strategy.Optimization do
           optimization_result()
   def run_combinations(dataframe, strategy_type, param_ranges, opts \\ []) do
     with {:ok, param_combinations} <- Ranges.parameter_grid(param_ranges),
-         {:ok, results} <- run_parameter_combinations(dataframe, strategy_type, param_combinations, opts) do
+         {:ok, results} <-
+           run_parameter_combinations(dataframe, strategy_type, param_combinations, opts) do
       {:ok, results}
     else
       {:error, reason} -> {:error, {:optimization_failed, reason}}
@@ -117,7 +118,12 @@ defmodule Quant.Strategy.Optimization do
         progress_callback: progress_fn
       )
   """
-  @spec run_combinations_parallel(DataFrame.t(), strategy_type(), param_ranges(), optimization_options()) ::
+  @spec run_combinations_parallel(
+          DataFrame.t(),
+          strategy_type(),
+          param_ranges(),
+          optimization_options()
+        ) ::
           optimization_result()
   def run_combinations_parallel(dataframe, strategy_type, param_ranges, opts \\ []) do
     concurrency = Keyword.get(opts, :concurrency, System.schedulers_online())
@@ -128,32 +134,17 @@ defmodule Quant.Strategy.Optimization do
       {:ok, param_combinations} ->
         total_combinations = length(param_combinations)
 
-      results =
-        param_combinations
-        |> Task.async_stream(
-          fn params ->
-            run_single_combination(dataframe, strategy_type, params, opts)
-          end,
-          max_concurrency: concurrency,
-          timeout: timeout,
-          on_timeout: :kill_task
-        )
-        |> Stream.with_index()
-        |> Stream.map(fn {result, index} ->
-          # Report progress if callback provided
-          if progress_callback do
-            progress = trunc((index + 1) / total_combinations * 100)
-            progress_callback.(progress)
-          end
-
-          case result do
-            {:ok, {:ok, result_row}} -> result_row
-            {:ok, {:error, _reason}} -> nil
-            {:exit, _reason} -> nil
-          end
-        end)
-        |> Stream.reject(&is_nil/1)
-        |> Enum.to_list()
+        results =
+          process_combinations_parallel(
+            param_combinations,
+            dataframe,
+            strategy_type,
+            opts,
+            concurrency,
+            timeout,
+            progress_callback,
+            total_combinations
+          )
 
         {:ok, Results.combine_results(results)}
 
@@ -293,19 +284,61 @@ defmodule Quant.Strategy.Optimization do
 
   # Private functions
 
+  defp process_combinations_parallel(
+         param_combinations,
+         dataframe,
+         strategy_type,
+         opts,
+         concurrency,
+         timeout,
+         progress_callback,
+         total_combinations
+       ) do
+    param_combinations
+    |> Task.async_stream(
+      fn params ->
+        run_single_combination(dataframe, strategy_type, params, opts)
+      end,
+      max_concurrency: concurrency,
+      timeout: timeout,
+      on_timeout: :kill_task
+    )
+    |> Stream.with_index()
+    |> Stream.map(fn {result, index} ->
+      # Report progress if callback provided
+      if progress_callback do
+        progress = trunc((index + 1) / total_combinations * 100)
+        progress_callback.(progress)
+      end
+
+      process_task_result(result)
+    end)
+    |> Stream.reject(&is_nil/1)
+    |> Enum.to_list()
+  end
+
+  defp process_task_result(result) do
+    case result do
+      {:ok, {:ok, result_row}} -> result_row
+      {:ok, {:error, _reason}} -> nil
+      {:exit, _reason} -> nil
+    end
+  end
+
   defp run_parameter_combinations(dataframe, strategy_type, param_combinations, opts) do
     if Enum.empty?(param_combinations) do
       # Return empty DataFrame with expected structure
-      {:ok, DataFrame.new(%{
-        fast_period: [],
-        slow_period: [],
-        total_return: [],
-        sharpe_ratio: [],
-        max_drawdown: [],
-        win_rate: [],
-        trade_count: [],
-        volatility: []
-      })}
+      {:ok,
+       DataFrame.new(%{
+         fast_period: [],
+         slow_period: [],
+         total_return: [],
+         sharpe_ratio: [],
+         max_drawdown: [],
+         win_rate: [],
+         trade_count: [],
+         volatility: []
+       })}
     else
       results =
         param_combinations
@@ -325,56 +358,55 @@ defmodule Quant.Strategy.Optimization do
   end
 
   defp run_single_combination(dataframe, strategy_type, params, opts) do
-    try do
-      # Create strategy with parameters
-      strategy = create_strategy(strategy_type, params)
+    # Create strategy with parameters
+    strategy = create_strategy(strategy_type, params)
 
-      # Run backtest
-      backtest_opts = [
-        initial_capital: Keyword.get(opts, :initial_capital, 10_000.0),
-        commission: Keyword.get(opts, :commission, 0.001),
-        slippage: Keyword.get(opts, :slippage, 0.0005)
-      ]
+    # Run backtest
+    backtest_opts = [
+      initial_capital: Keyword.get(opts, :initial_capital, 10_000.0),
+      commission: Keyword.get(opts, :commission, 0.001),
+      slippage: Keyword.get(opts, :slippage, 0.0005)
+    ]
 
-      case Strategy.backtest(dataframe, strategy, backtest_opts) do
-        {:ok, backtest_results} ->
-          result_row = extract_performance_metrics(params, backtest_results, opts)
-          {:ok, result_row}
-        {:error, reason} ->
-          {:error, {:backtest_failed, reason}}
-      end
-    rescue
-      e -> {:error, {:strategy_creation_failed, Exception.message(e)}}
+    case Strategy.backtest(dataframe, strategy, backtest_opts) do
+      {:ok, backtest_results} ->
+        result_row = extract_performance_metrics(params, backtest_results, opts)
+        {:ok, result_row}
+
+      {:error, reason} ->
+        {:error, {:backtest_failed, reason}}
     end
+  rescue
+    e -> {:error, {:strategy_creation_failed, Exception.message(e)}}
   end
 
   defp create_strategy(strategy_type, params) do
     case strategy_type do
       :sma_crossover ->
-        Strategy.sma_crossover([
+        Strategy.sma_crossover(
           fast_period: Map.get(params, :fast_period, 12),
           slow_period: Map.get(params, :slow_period, 26)
-        ])
+        )
 
       :ema_crossover ->
-        Strategy.ema_crossover([
+        Strategy.ema_crossover(
           fast_period: Map.get(params, :fast_period, 12),
           slow_period: Map.get(params, :slow_period, 26)
-        ])
+        )
 
       :rsi_threshold ->
-        Strategy.rsi_threshold([
+        Strategy.rsi_threshold(
           period: Map.get(params, :period, 14),
           oversold: Map.get(params, :oversold, 30),
           overbought: Map.get(params, :overbought, 70)
-        ])
+        )
 
       :macd_crossover ->
-        Strategy.macd_crossover([
+        Strategy.macd_crossover(
           fast_period: Map.get(params, :fast_period, 12),
           slow_period: Map.get(params, :slow_period, 26),
           signal_period: Map.get(params, :signal_period, 9)
-        ])
+        )
 
       _ ->
         raise ArgumentError, "Unsupported strategy type: #{strategy_type}"
@@ -384,10 +416,17 @@ defmodule Quant.Strategy.Optimization do
   defp extract_performance_metrics(params, backtest_results, opts) do
     # Extract key metrics from backtest results
     portfolio_values = DataFrame.pull(backtest_results, "portfolio_value") |> Series.to_list()
-    total_return = DataFrame.pull(backtest_results, "total_return") |> Series.to_list() |> List.last()
-    max_drawdown = DataFrame.pull(backtest_results, "max_drawdown") |> Series.to_list() |> List.last()
+
+    total_return =
+      DataFrame.pull(backtest_results, "total_return") |> Series.to_list() |> List.last()
+
+    max_drawdown =
+      DataFrame.pull(backtest_results, "max_drawdown") |> Series.to_list() |> List.last()
+
     win_rate = DataFrame.pull(backtest_results, "win_rate") |> Series.to_list() |> List.last()
-    trade_count = DataFrame.pull(backtest_results, "trade_count") |> Series.to_list() |> List.last()
+
+    trade_count =
+      DataFrame.pull(backtest_results, "trade_count") |> Series.to_list() |> List.last()
 
     # Calculate additional metrics
     returns = calculate_returns(portfolio_values)
@@ -400,7 +439,8 @@ defmodule Quant.Strategy.Optimization do
     result =
       params
       |> Map.put(:total_return, total_return)
-      |> Map.put(:annualized_return, total_return) # Simplified for now
+      # Simplified for now
+      |> Map.put(:annualized_return, total_return)
       |> Map.put(:sharpe_ratio, sharpe_ratio)
       |> Map.put(:sortino_ratio, sortino_ratio)
       |> Map.put(:calmar_ratio, calmar_ratio)
@@ -430,6 +470,7 @@ defmodule Quant.Strategy.Optimization do
       0.0
     else
       mean_return = Enum.sum(returns) / length(returns)
+
       variance =
         returns
         |> Enum.map(fn r -> :math.pow(r - mean_return, 2) end)

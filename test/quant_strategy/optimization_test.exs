@@ -11,9 +11,36 @@ defmodule Quant.Strategy.OptimizationTest do
   # Test data - realistic stock price movements
   @test_data %{
     close: [
-      100.0, 102.0, 101.0, 103.0, 105.0, 104.0, 106.0, 108.0, 107.0, 109.0,
-      111.0, 110.0, 112.0, 114.0, 113.0, 115.0, 117.0, 116.0, 118.0, 120.0,
-      122.0, 121.0, 123.0, 125.0, 124.0, 126.0, 128.0, 127.0, 129.0, 131.0
+      100.0,
+      102.0,
+      101.0,
+      103.0,
+      105.0,
+      104.0,
+      106.0,
+      108.0,
+      107.0,
+      109.0,
+      111.0,
+      110.0,
+      112.0,
+      114.0,
+      113.0,
+      115.0,
+      117.0,
+      116.0,
+      118.0,
+      120.0,
+      122.0,
+      121.0,
+      123.0,
+      125.0,
+      124.0,
+      126.0,
+      128.0,
+      127.0,
+      129.0,
+      131.0
     ]
   }
 
@@ -100,11 +127,12 @@ defmodule Quant.Strategy.OptimizationTest do
     end
 
     test "parameter_correlation/3 calculates correlation between parameters" do
-      df = DataFrame.new(%{
-        fast_period: [5, 10, 15, 20],
-        slow_period: [20, 25, 30, 35],
-        total_return: [0.1, 0.2, 0.15, 0.25]
-      })
+      df =
+        DataFrame.new(%{
+          fast_period: [5, 10, 15, 20],
+          slow_period: [20, 25, 30, 35],
+          total_return: [0.1, 0.2, 0.15, 0.25]
+        })
 
       corr = Results.parameter_correlation(df, :fast_period, :slow_period)
       assert is_number(corr)
@@ -121,12 +149,13 @@ defmodule Quant.Strategy.OptimizationTest do
         slow_period: [15, 20]
       }
 
-      assert {:ok, results} = Optimization.run_combinations(
-        df,
-        :sma_crossover,
-        param_ranges,
-        initial_capital: 10_000.0
-      )
+      assert {:ok, results} =
+               Optimization.run_combinations(
+                 df,
+                 :sma_crossover,
+                 param_ranges,
+                 initial_capital: 10_000.0
+               )
 
       # Should have 4 combinations (2 x 2)
       assert DataFrame.n_rows(results) == 4
@@ -165,7 +194,7 @@ defmodule Quant.Strategy.OptimizationTest do
       param_ranges = %{period: [5, 10]}
 
       assert {:error, {:optimization_failed, _}} =
-        Optimization.run_combinations(df, :invalid_strategy, param_ranges)
+               Optimization.run_combinations(df, :invalid_strategy, param_ranges)
     end
 
     test "handles empty parameter ranges" do
@@ -180,7 +209,7 @@ defmodule Quant.Strategy.OptimizationTest do
       param_ranges = %{fast_period: [5], slow_period: [10]}
 
       assert {:error, {:optimization_failed, _}} =
-        Optimization.run_combinations(small_df, :sma_crossover, param_ranges)
+               Optimization.run_combinations(small_df, :sma_crossover, param_ranges)
     end
   end
 end

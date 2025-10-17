@@ -27,37 +27,35 @@ defmodule Quant.Strategy.Optimization.Ranges do
   @spec parameter_grid(%{atom() => Range.t() | [any()] | any()}) ::
           {:ok, [%{atom() => any()}]} | {:error, term()}
   def parameter_grid(param_map) when is_map(param_map) do
-    try do
-      # Handle empty parameter map
-      if Enum.empty?(param_map) do
-        {:ok, []}
-      else
-        # Convert all parameter values to lists
-        param_lists =
-          param_map
-          |> Enum.map(fn {key, value} -> {key, expand_parameter_value(value)} end)
+    # Handle empty parameter map
+    if Enum.empty?(param_map) do
+      {:ok, []}
+    else
+      # Convert all parameter values to lists
+      param_lists =
+        param_map
+        |> Enum.map(fn {key, value} -> {key, expand_parameter_value(value)} end)
+        |> Enum.into(%{})
+
+      # Generate all combinations
+      param_keys = Map.keys(param_lists)
+      param_values = Map.values(param_lists)
+
+      combinations = cartesian_product(param_values)
+
+      # Convert back to maps
+      result =
+        combinations
+        |> Enum.map(fn combination ->
+          param_keys
+          |> Enum.zip(combination)
           |> Enum.into(%{})
+        end)
 
-        # Generate all combinations
-        param_keys = Map.keys(param_lists)
-        param_values = Map.values(param_lists)
-
-        combinations = cartesian_product(param_values)
-
-        # Convert back to maps
-        result =
-          combinations
-          |> Enum.map(fn combination ->
-            param_keys
-            |> Enum.zip(combination)
-            |> Enum.into(%{})
-          end)
-
-        {:ok, result}
-      end
-    rescue
-      e -> {:error, {:parameter_grid_failed, Exception.message(e)}}
+      {:ok, result}
     end
+  rescue
+    e -> {:error, {:parameter_grid_failed, Exception.message(e)}}
   end
 
   def parameter_grid(_), do: {:error, :invalid_parameter_map}
@@ -96,6 +94,7 @@ defmodule Quant.Strategy.Optimization.Ranges do
       [start / 1.0]
     else
       step = (stop - start) / (num - 1)
+
       0..(num - 1)
       |> Enum.map(fn i -> start + i * step end)
     end
@@ -116,19 +115,17 @@ defmodule Quant.Strategy.Optimization.Ranges do
   @spec random_search(%{atom() => Range.t() | [any()]}, pos_integer()) ::
           {:ok, [%{atom() => any()}]} | {:error, term()}
   def random_search(param_map, n_samples) when is_map(param_map) and n_samples > 0 do
-    try do
-      samples =
-        1..n_samples
-        |> Enum.map(fn _ ->
-          param_map
-          |> Enum.map(fn {key, value} -> {key, sample_random_value(value)} end)
-          |> Enum.into(%{})
-        end)
+    samples =
+      1..n_samples
+      |> Enum.map(fn _ ->
+        param_map
+        |> Enum.map(fn {key, value} -> {key, sample_random_value(value)} end)
+        |> Enum.into(%{})
+      end)
 
-      {:ok, samples}
-    rescue
-      e -> {:error, {:random_search_failed, Exception.message(e)}}
-    end
+    {:ok, samples}
+  rescue
+    e -> {:error, {:random_search_failed, Exception.message(e)}}
   end
 
   def random_search(_, _), do: {:error, :invalid_parameters}
@@ -190,6 +187,7 @@ defmodule Quant.Strategy.Optimization.Ranges do
   end
 
   defp cartesian_product([]), do: [[]]
+
   defp cartesian_product([head | tail]) do
     for h <- head, t <- cartesian_product(tail), do: [h | t]
   end
@@ -198,8 +196,10 @@ defmodule Quant.Strategy.Optimization.Ranges do
     case value do
       %Range{first: first, last: last} ->
         :rand.uniform(last - first + 1) + first - 1
+
       list when is_list(list) ->
         Enum.random(list)
+
       single_value ->
         single_value
     end
