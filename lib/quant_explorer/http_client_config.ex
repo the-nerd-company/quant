@@ -9,7 +9,7 @@ defmodule Quant.Explorer.HttpClientConfig do
   Otherwise returns the standard HTTP client.
   """
   def http_client do
-    case Application.get_env(:quant_explorer, :http_client) do
+    case Application.get_env(:quant, :http_client) do
       nil -> Quant.Explorer.HttpClient
       module when is_atom(module) -> module
     end

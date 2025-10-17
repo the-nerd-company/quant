@@ -14,7 +14,7 @@ defmodule Quant.Explorer.Providers.AlphaVantageTest do
 
   setup_all do
     # Use real HTTP client for integration tests
-    Application.put_env(:quant_explorer, :http_client, Quant.Explorer.HttpClient)
+    Application.put_env(:quant, :http_client, Quant.Explorer.HttpClient)
     :ok
   end
 
@@ -354,15 +354,15 @@ defmodule Quant.Explorer.Providers.AlphaVantageTest do
   describe "error handling" do
     test "handles missing API key gracefully" do
       # Temporarily set API key to nil
-      original_config = Application.get_env(:quant_explorer, :api_keys, %{})
-      Application.put_env(:quant_explorer, :api_keys, %{alpha_vantage: nil})
+      original_config = Application.get_env(:quant, :api_keys, %{})
+      Application.put_env(:quant, :api_keys, %{alpha_vantage: nil})
 
       assert_raise RuntimeError, ~r/Alpha Vantage API key is required/, fn ->
         AlphaVantage.history("IBM")
       end
 
       # Restore original config
-      Application.put_env(:quant_explorer, :api_keys, original_config)
+      Application.put_env(:quant, :api_keys, original_config)
     end
 
     test "handles JSON parsing errors" do

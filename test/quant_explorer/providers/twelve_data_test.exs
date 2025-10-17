@@ -15,7 +15,7 @@ defmodule Quant.Explorer.Providers.TwelveDataTest do
 
   setup_all do
     # Use real HTTP client for integration tests
-    Application.put_env(:quant_explorer, :http_client, Quant.Explorer.HttpClient)
+    Application.put_env(:quant, :http_client, Quant.Explorer.HttpClient)
 
     # Skip tests if API key is not available
     case System.get_env("TWELVE_DATA_API_KEY") do
@@ -23,7 +23,7 @@ defmodule Quant.Explorer.Providers.TwelveDataTest do
         {:skip, "TWELVE_DATA_API_KEY environment variable not set"}
 
       api_key ->
-        Application.put_env(:quant_explorer, :api_keys, %{twelve_data: api_key})
+        Application.put_env(:quant, :api_keys, %{twelve_data: api_key})
         :ok
     end
   end
@@ -280,13 +280,13 @@ defmodule Quant.Explorer.Providers.TwelveDataTest do
   describe "error handling" do
     test "handles API key errors gracefully" do
       # Temporarily remove API key
-      original_keys = Application.get_env(:quant_explorer, :api_keys, %{})
-      Application.put_env(:quant_explorer, :api_keys, %{twelve_data: "invalid_key"})
+      original_keys = Application.get_env(:quant, :api_keys, %{})
+      Application.put_env(:quant, :api_keys, %{twelve_data: "invalid_key"})
 
       result = TwelveData.quote("AAPL")
 
       # Restore original keys
-      Application.put_env(:quant_explorer, :api_keys, original_keys)
+      Application.put_env(:quant, :api_keys, original_keys)
 
       case result do
         {:error, {:api_key_error, _}} -> assert true

@@ -16,11 +16,14 @@ Quant.Explorer now provides **complete standardization** for both query paramete
 ## 📊 Standardized Parameters
 
 ### Time Intervals (`:interval`)
+
 Use these **standard intervals** with any provider:
+
 - `"1m"`, `"5m"`, `"15m"`, `"30m"`, `"1h"` - Intraday intervals
 - `"1d"`, `"1w"`, `"1mo"` - Daily and longer intervals
 
 **Automatic Translation:**
+
 ```elixir
 # Your Code (standardized)
 interval: "1d"
@@ -34,11 +37,14 @@ interval: "1d"
 ```
 
 ### Time Periods (`:period`)
+
 Use these **standard periods** with any provider:
+
 - `"1d"`, `"5d"`, `"1mo"`, `"3mo"`, `"6mo"`
 - `"1y"`, `"2y"`, `"5y"`, `"10y"`, `"max"`
 
 **Automatic Translation:**
+
 ```elixir  
 # Your Code (standardized)
 period: "1y"
@@ -51,6 +57,7 @@ period: "1y"
 ```
 
 ### Other Standard Parameters
+
 - `:limit` - Number of data points (1-5000)
 - `:currency` - Base currency: `"usd"`, `"eur"`, `"btc"`, `"eth"` 
 - `:adjusted` - Use adjusted prices (boolean, default: true)
@@ -60,7 +67,9 @@ period: "1y"
 ## 📈 Standardized Output Schemas
 
 ### Historical Data Schema
+
 **ALL providers return identical columns:**
+
 ```elixir
 [
   "symbol",        # Stock/crypto symbol (string)
@@ -78,8 +87,10 @@ period: "1y"
 ]
 ```
 
-### Quote Data Schema  
+### Quote Data Schema
+
 **ALL providers return identical columns:**
+
 ```elixir
 [
   "symbol",        # Stock/crypto symbol (string)
@@ -98,7 +109,9 @@ period: "1y"
 ```
 
 ### Search Results Schema
+
 **ALL providers return identical columns:**
+
 ```elixir
 [
   "symbol",        # Trading symbol (string)
@@ -265,7 +278,7 @@ Perfect for financial analysis in Livebook notebooks:
 
 ```elixir
 # Livebook Cell 1: Setup
-Mix.install([{:quant_explorer, github: "the-nerd-company/quant_explorer"}])
+Mix.install([{:quant, github: "the-nerd-company/quant"}])
 
 # Livebook Cell 2: Multi-Provider Data Collection  
 alpha_key = System.fetch_env!("ALPHA_VANTAGE_API_KEY")

@@ -17,7 +17,7 @@ defmodule Quant.Explorer.Providers.CoinGecko do
   ## Configuration
 
   ```elixir
-  config :quant_explorer,
+  config :quant,
     api_keys: %{
       coin_gecko: "your_api_key_here"  # Optional for demo tier
     }
@@ -525,7 +525,7 @@ defmodule Quant.Explorer.Providers.CoinGecko do
   end
 
   defp get_api_key do
-    case Application.get_env(:quant_explorer, :api_keys, %{}) do
+    case Application.get_env(:quant, :api_keys, %{}) do
       %{coin_gecko: api_key} when is_binary(api_key) -> api_key
       _ -> nil
     end

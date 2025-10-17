@@ -19,7 +19,7 @@ defmodule Quant.Explorer.RateLimiting.RedisBackend do
 
   defstruct [:conn, :key_prefix, :scripts, :pipeline_size]
 
-  @default_key_prefix "quant_explorer:rate_limit"
+  @default_key_prefix "quant:rate_limit"
   @default_pipeline_size 10
 
   # Lua scripts for atomic operations

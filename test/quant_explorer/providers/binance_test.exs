@@ -14,7 +14,7 @@ defmodule Quant.Explorer.Providers.BinanceTest do
 
   setup_all do
     # Use real HTTP client for integration tests
-    Application.put_env(:quant_explorer, :http_client, Quant.Explorer.HttpClient)
+    Application.put_env(:quant, :http_client, Quant.Explorer.HttpClient)
     :ok
   end
 

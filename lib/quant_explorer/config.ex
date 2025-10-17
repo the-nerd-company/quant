@@ -7,7 +7,7 @@ defmodule Quant.Explorer.Config do
   value resolution (e.g., from system environment variables).
   """
 
-  @app :quant_explorer
+  @app :quant
 
   @doc """
   Gets a configuration value for the given key.

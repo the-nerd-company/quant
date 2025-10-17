@@ -203,7 +203,7 @@ Add cache metadata to responses:
 
 ### Development Environment
 ```elixir
-config :quant_explorer, :cache,
+config :quant, :cache,
   backend: Quant.Explorer.Cache.ETSBackend,
   fragment_size: :small,  # Smaller fragments for testing
   ttl_multiplier: 0.1,    # Shorter TTLs for development
@@ -212,7 +212,7 @@ config :quant_explorer, :cache,
 
 ### Production Environment
 ```elixir
-config :quant_explorer, :cache,
+config :quant, :cache,
   backend: Quant.Explorer.Cache.RedisBackend,
   fragment_size: :optimized,
   ttl_multiplier: 1.0,

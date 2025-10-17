@@ -19,7 +19,7 @@ config :pythonx, :uv_init,
   ]
   """
 
-config :quant_explorer,
+config :quant,
   # Rate limiting (legacy - for backwards compatibility)
   rate_limits: %{
     yahoo_finance: 100,

@@ -41,14 +41,14 @@ defmodule Quant.Explorer.TestHelper do
 
       # Mock the HttpClient at the module level
       original_http_client =
-        Application.get_env(:quant_explorer, :http_client, QE.HttpClient)
+        Application.get_env(:quant, :http_client, QE.HttpClient)
 
-      Application.put_env(:quant_explorer, :http_client, QE.HttpClient.Mock)
+      Application.put_env(:quant, :http_client, QE.HttpClient.Mock)
 
       try do
         unquote(block)
       after
-        Application.put_env(:quant_explorer, :http_client, original_http_client)
+        Application.put_env(:quant, :http_client, original_http_client)
         QE.HttpMock.reset()
       end
     end

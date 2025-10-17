@@ -2,7 +2,7 @@
 
 ```elixir
 Mix.install([
-  {:quant_explorer, github: "the-nerd-company/quant_explorer"},
+  {:quant, github: "the-nerd-company/quant"},
   {:kino, "~> 0.12.0"},
   {:vega_lite, "~> 0.1.8"},
   {:kino_vega_lite, "~> 0.1.11"}
@@ -521,6 +521,6 @@ IO.puts("🚀 Ready to explore more financial data with Quant.Explorer!")
 
 ---
 
-**📚 Documentation:** [GitHub Repository](https://github.com/the-nerd-company/quant_explorer)
+**📚 Documentation:** [GitHub Repository](https://github.com/the-nerd-company/quant)
 
-**🔧 Issues & Features:** [GitHub Issues](https://github.com/the-nerd-company/quant_explorer/issues)
+**🔧 Issues & Features:** [GitHub Issues](https://github.com/the-nerd-company/quant/issues)

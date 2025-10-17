@@ -53,7 +53,7 @@ defmodule Quant.Explorer.Providers.YahooFinance do
 
   # Yahoo Finance API configuration
   @base_url "https://query1.finance.yahoo.com"
-  @user_agent "Quant.Explorer/#{Mix.Project.config()[:version]} (+https://github.com/the-nerd-company/quant_explorer)"
+  @user_agent "Quant.Explorer/#{Mix.Project.config()[:version]} (+https://github.com/the-nerd-company/quant)"
 
   # Default request options
   @default_timeout 10_000

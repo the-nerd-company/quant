@@ -6,7 +6,7 @@
 
 ```elixir
 Mix.install([
-  {:quant_explorer, path: "/Users/guillaume/perso/quant"},
+  {:quant, path: "/Users/guillaume/perso/quant"},
   {:explorer, "~> 0.11"},
   {:kino, "~> 0.12"},
   {:decimal, "~> 2.0"},

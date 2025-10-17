@@ -40,6 +40,72 @@ Fetch financial data from multiple providers with **universal parameters** and *
 - **Composite Strategies**: Combine multiple strategies for advanced analysis
 - **Volatility Strategies**: Bollinger Bands and mean reversion systems
 
+### 🔧 **Parameter Optimization (vectorbt-like)**
+
+**Systematic parameter tuning with vectorbt-equivalent functionality:**
+
+```elixir
+# Get historical data
+{:ok, df} = Quant.Explorer.history("AAPL", provider: :yahoo_finance, period: "1y")
+
+# Define parameter ranges (like vectorbt.simulate_all_params())
+param_ranges = %{
+  fast_period: 5..20,     # SMA fast period range
+  slow_period: 20..50     # SMA slow period range  
+}
+
+# Run optimization across all combinations - equivalent to vectorbt
+{:ok, results} = Quant.Strategy.Optimization.run_combinations(df, :sma_crossover, param_ranges)
+
+# Find best parameters (equivalent to results.idxmax())
+best_params = Quant.Strategy.Optimization.find_best_params(results, :total_return)
+# => %{fast_period: 12, slow_period: 26, total_return: 0.2847}
+```
+
+**🚀 Advanced Features:**
+
+| Feature | Description | Performance | Use Case |
+|---------|-------------|-------------|----------|
+| **Parallel Processing** | Multi-core parameter testing | 4x faster on 4-core | Large parameter spaces |
+| **Streaming Results** | Memory-efficient processing | Constant memory usage | 1000+ combinations |
+| **Walk-Forward Analysis** | Out-of-sample validation | Prevents overfitting | Robust parameter selection |
+| **CSV/JSON Export** | Results export & analysis | Full precision | Research & reporting |
+| **Performance Benchmarking** | Optimization profiling | Scaling analysis | System optimization |
+
+**🎯 Production-Ready Optimization:**
+
+```elixir
+# Parallel processing for speed (uses all CPU cores)
+{:ok, results} = Quant.Strategy.Optimization.run_combinations_parallel(
+  df, :sma_crossover, param_ranges, 
+  concurrency: System.schedulers_online()
+)
+
+# Walk-forward optimization for robustness
+{:ok, wf_results} = Quant.Strategy.Optimization.walk_forward_optimization(
+  df, :sma_crossover, param_ranges,
+  window_size: 252,  # 1 year training
+  step_size: 63      # Quarterly reoptimization
+)
+
+# Memory-efficient streaming for large parameter spaces
+results_stream = Quant.Strategy.Optimization.run_combinations_stream(
+  df, :sma_crossover, %{period: 5..100}, chunk_size: 20
+)
+
+# Export results for analysis
+:ok = Quant.Strategy.Optimization.Export.to_csv(results, "optimization_results.csv")
+:ok = Quant.Strategy.Optimization.Export.to_json(results, "results.json", precision: 6)
+```
+
+**📊 Comprehensive Analysis Tools:**
+
+- **Parameter Correlation**: Find relationships between parameters and performance
+- **Performance Metrics**: Total return, Sharpe ratio, max drawdown, win rate
+- **Ranking & Filtering**: Sort by any metric, filter by constraints
+- **Statistical Summary**: Mean, std dev, percentiles of parameter performance
+- **Cross-Validation**: Walk-forward, expanding window validation methods
+
 ### 🧪 **Python Cross-Validation Framework**
 
 | Validation Type | Description | Coverage | Results |
@@ -149,7 +215,7 @@ combined_df = DataFrame.concat_rows([binance_btc, yahoo_aapl, alpha_msft])
 # Add to mix.exs
 def deps do
   [
-    {:quant_explorer, github: "the-nerd-company/quant"}
+    {:quant, github: "the-nerd-company/quant"}
   ]
 end
 ```
@@ -219,7 +285,7 @@ All functions require an explicit `provider:` parameter. There are no default pr
 # Add to mix.exs
 def deps do
   [
-    {:quant_explorer, github: "the-nerd-company/quant_explorer"}
+    {:quant, github: "the-nerd-company/quant"}
   ]
 end
 ```
@@ -317,6 +383,50 @@ currencies = ["usd", "eur", "btc", "eth"]
 {:ok, df} = Quant.Explorer.search("Apple", provider: :twelve_data)
 ```
 
+### Parameter Optimization Quick Start
+
+**vectorbt-like parameter optimization for systematic strategy tuning:**
+
+```elixir
+# 1. Get historical data
+{:ok, df} = Quant.Explorer.history("AAPL", provider: :yahoo_finance, period: "1y")
+
+# 2. Define parameter ranges to test
+param_ranges = %{
+  fast_period: 5..15,    # Test fast SMA periods 5-15
+  slow_period: 20..30    # Test slow SMA periods 20-30
+}
+
+# 3. Run optimization (tests all combinations)
+{:ok, results} = Quant.Strategy.Optimization.run_combinations(df, :sma_crossover, param_ranges)
+
+# 4. Find best parameters
+best = Quant.Strategy.Optimization.find_best_params(results, :total_return)
+# => %{fast_period: 8, slow_period: 24, total_return: 0.187, sharpe_ratio: 1.43}
+
+# 5. Export results for analysis
+:ok = Quant.Strategy.Optimization.Export.to_csv(results, "optimization_results.csv")
+```
+
+**🚀 Advanced optimization features:**
+
+```elixir
+# Parallel processing (4x faster)
+{:ok, results} = Quant.Strategy.Optimization.run_combinations_parallel(
+  df, :sma_crossover, param_ranges, concurrency: 4
+)
+
+# Walk-forward optimization (prevents overfitting)
+{:ok, wf_results} = Quant.Strategy.Optimization.walk_forward_optimization(
+  df, :sma_crossover, param_ranges, window_size: 252, step_size: 63
+)
+
+# Memory-efficient streaming (for large parameter spaces)  
+results_stream = Quant.Strategy.Optimization.run_combinations_stream(
+  df, :sma_crossover, %{period: 5..100}, chunk_size: 20
+)
+```
+
 ## Features
 
 - **🎯 Standardized Interface**: Universal parameters and identical schemas across ALL providers
@@ -324,6 +434,8 @@ currencies = ["usd", "eur", "btc", "eth"]
 - **🔄 Multi-Provider**: Yahoo Finance, Alpha Vantage, Binance, CoinGecko, Twelve Data
 - **💰 Crypto Support**: Native cryptocurrency data with standardized schemas
 - **📊 Seamless Analysis**: Combine data from multiple providers effortlessly
+- **🔧 Parameter Optimization**: vectorbt-like functionality for systematic strategy tuning
+- **🚀 Parallel Processing**: Multi-core optimization with walk-forward validation
 - **🎯 Advanced Rate Limiting**: Weighted rate limiting per provider with ETS/Redis backends
 - **🛠️ Zero External Dependencies**: Uses built-in Erlang `:httpc` for maximum reliability
 - **🔑 Flexible API Keys**: Pass API keys inline or configure globally
@@ -488,6 +600,80 @@ df = stream |> Enum.to_list() |> List.first()
 {:ok, df} = Quant.Explorer.Providers.Binance.quote(["BTCUSDT", "ETHUSDT", "ADAUSDT"])
 ```
 
+### Parameter Optimization - Advanced Examples
+
+```elixir
+# Complex multi-parameter optimization
+{:ok, df} = Quant.Explorer.history("AAPL", provider: :yahoo_finance, period: "2y")
+
+# Test RSI + Bollinger Bands strategy
+param_ranges = %{
+  rsi_period: 10..20,
+  rsi_overbought: 70..80, 
+  rsi_oversold: 20..30,
+  bb_period: 15..25,
+  bb_std_dev: 1.5..2.5
+}
+
+# Parallel optimization across all combinations
+{:ok, results} = Quant.Strategy.Optimization.run_combinations_parallel(
+  df, :rsi_bollinger, param_ranges, 
+  concurrency: System.schedulers_online(),
+  initial_capital: 10_000.0,
+  commission: 0.001
+)
+
+# Analyze parameter correlations
+correlations = Quant.Strategy.Optimization.Results.parameter_correlation(
+  results, :total_return, [:rsi_period, :bb_period]
+)
+
+# Walk-forward optimization for robustness
+{:ok, wf_results} = Quant.Strategy.Optimization.walk_forward_optimization(
+  df, :rsi_bollinger, param_ranges,
+  window_size: 252,  # 1 year training window
+  step_size: 21,     # Monthly reoptimization
+  min_trades: 10     # Require minimum trades
+)
+
+# Export comprehensive results
+:ok = Quant.Strategy.Optimization.Export.to_csv(results, "full_optimization.csv", 
+  delimiter: ",", precision: 4)
+
+:ok = Quant.Strategy.Optimization.Export.to_json(wf_results, "walkforward_results.json")
+
+# Generate summary report
+:ok = Quant.Strategy.Optimization.Export.summary(results, "optimization_summary.txt",
+  include_correlations: true, top_n: 10)
+
+# Memory-efficient streaming for very large parameter spaces
+large_ranges = %{
+  fast_period: 5..50,      # 46 values
+  slow_period: 51..200,    # 150 values  
+  signal_period: 5..20     # 16 values
+}
+# Total: 46 * 150 * 16 = 110,400 combinations!
+
+# Process in chunks to avoid memory issues
+results_stream = Quant.Strategy.Optimization.run_combinations_stream(
+  df, :triple_sma, large_ranges, chunk_size: 1000
+)
+
+# Process results as they come in
+best_so_far = results_stream
+|> Stream.map(fn {:ok, chunk_df} ->
+  chunk_df
+  |> DataFrame.filter(col("total_return") > 0.1)  # Filter profitable combinations
+  |> DataFrame.slice_head(10)  # Keep top 10 per chunk
+end)
+|> Stream.reject(&(DataFrame.n_rows(&1) == 0))  # Skip empty chunks
+|> Enum.reduce(fn chunk, acc -> 
+  DataFrame.concat_rows([acc, chunk])
+  |> DataFrame.sort_by(desc(col("total_return")))  
+  |> DataFrame.slice_head(50)  # Keep top 50 overall
+end)
+```
+
 ## Configuration
 
 ### Alpha Vantage API Key
@@ -502,7 +688,7 @@ export TWELVE_DATA_API_KEY="your_api_key_here"
 Or in your application config:
 
 ```elixir
-config :quant_explorer,
+config :quant,
   api_keys: %{
     alpha_vantage: "your_api_key_here",
     twelve_data: "your_api_key_here"
@@ -574,7 +760,7 @@ Perfect for data science and research in Livebook:
 
 ```elixir
 # Cell 1: Setup
-Mix.install([{:quant_explorer, github: "the-nerd-company/quant_explorer"}])
+Mix.install([{:quant, github: "the-nerd-company/quant"}])
 
 # Cell 2: Get data with inline API key
 api_key = "your_alpha_vantage_api_key"

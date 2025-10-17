@@ -1,8 +1,8 @@
-# QuantExplorer Development Specification - **PHASE 1 COMPLETE! 🎉 PHASE 2.1 COMPLETE! 🎉 PHASE 2.2 COMPLETE! 🎉**
+# Quant Development Specification - **PHASE 1 COMPLETE! 🎉 PHASE 2.1 COMPLETE! 🎉 PHASE 2.2 COMPLETE! 🎉**
 
 ## Project Overview
 
-**Library Name**: QuantExplorer  
+**Library Name**: Quant  
 **Namespace**: `Quant.Explorer`, `Quant.Math`, `Quant.Strategy`, `Quant.Backtest`, `Quant.Portfolio`, `Quant.Risk`  
 **Primary Goal**: Comprehensive quantitative finance library for Elixir with backtesting capabilities  
 **Data Foundation**: Integration with existing FinExplorer cached data system
@@ -746,7 +746,7 @@ df |> Quant.Risk.add_drawdown(:cumulative_returns)
 ### Module Files
 ```
 lib/
-├── quant_explorer.ex                    # Main API module
+├── quant.ex                    # Main API module
 ├── quant/
 │   ├── explorer/                        # Data integration
 │   │   ├── data.ex                      # FinExplorer bridge
@@ -799,4 +799,4 @@ test/
 - Memory usage should not exceed 2x input DataFrame size
 - Support for parallel processing of multiple assets
 
-This specification provides the complete roadmap for implementing QuantExplorer as a comprehensive quantitative finance library built on Explorer DataFrames with strategic NX optimization for mathematical operations.
+This specification provides the complete roadmap for implementing Quant as a comprehensive quantitative finance library built on Explorer DataFrames with strategic NX optimization for mathematical operations.

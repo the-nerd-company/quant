@@ -27,7 +27,7 @@ config :git_hooks,
   project_path: project_path
 
 # Development environment configuration
-config :quant_explorer,
+config :quant,
   # Lower rate limits for development to avoid hitting API limits during testing
   rate_limits: %{
     yahoo_finance: 60,
